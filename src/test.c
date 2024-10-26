@@ -37,6 +37,29 @@ int test_player_fire() {
     assert(bullets[i].y != original_y_coord);
   }
 
+  // TEST: despawn bullets out of bounds
+  int y_coords = 0;
+  int y_limit = 100;
+  Vector2 start_pos = {10, 0};
+
+  Fire(bullets, &bullet_count, start_pos);
+
+  while (y_coords <= y_limit) {
+    if (y_coords == y_limit) {
+      printf("bullet did not despawn beyond boundary.\n");
+      exit(1);
+    }
+
+    if (bullet_count == fire_frequency) {
+      break;
+    }
+
+    UpdateBulletPosition(bullets, &bullet_count);
+    DespawnBulletOutOfBounds(bullets, &bullet_count, 100, y_limit);
+
+    y_coords++;
+  }
+
   return 0;
 }
 

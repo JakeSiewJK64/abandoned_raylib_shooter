@@ -3,6 +3,7 @@
 #include "../include/test.h"
 #include <raylib.h>
 #include <stddef.h>
+#include <stdio.h>
 
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 800
@@ -24,6 +25,7 @@ int RunGame(GameObject *player, Vector2 *bullets, int *bullet_count) {
   Fire(bullets, bullet_count, player->position);
   DrawBullets(bullets, bullet_count);
   UpdateBulletPosition(bullets, bullet_count);
+  DespawnBulletOutOfBounds(bullets, bullet_count, SCREEN_WIDTH, SCREEN_HEIGHT);
 
   EndDrawing();
   return 0;
@@ -54,6 +56,7 @@ int main() {
 
   // main game loop
   while (!WindowShouldClose()) {
+    printf("total bullets in the world: %d\n", bullet_count);
     RunGame(&player, bullets, &bullet_count);
   }
 
