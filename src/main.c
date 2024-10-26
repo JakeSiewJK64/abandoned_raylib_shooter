@@ -10,7 +10,7 @@
 #define MAX_BULLETS 1000
 
 // game renderer
-int RunGame(GameObject *player) {
+int RunGame(GameObject *player, Vector2 *bullets, int *bullet_count) {
 
   // move player
   UpdatePlayerPosition(player);
@@ -20,6 +20,10 @@ int RunGame(GameObject *player) {
 
   // draw the plane
   DrawPlayer(player);
+
+  Fire(bullets, bullet_count, player->position);
+  DrawBullets(bullets, bullet_count);
+  UpdateBulletPosition(bullets, bullet_count);
 
   EndDrawing();
   return 0;
@@ -38,6 +42,10 @@ int main() {
   // initialize assets
   Texture2D plane = LoadTexture("assets/plane.png");
 
+  // initialize bullet
+  int bullet_count = 0;  // declare total bullet count spawned in the world
+  Vector2 bullets[1000]; // declare bullet list with a fixed size
+
   // initialize player
   Vector2 vector = {screen_width / 2, screen_height - (.2f * screen_width)};
   GameObject player;
@@ -46,7 +54,7 @@ int main() {
 
   // main game loop
   while (!WindowShouldClose()) {
-    RunGame(&player);
+    RunGame(&player, bullets, &bullet_count);
   }
 
   return 0;

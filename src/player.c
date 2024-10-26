@@ -34,3 +34,19 @@ int appendBullet(Vector2 new_bullet, Vector2 *bullets, int *bullet_count) {
 void Fire(Vector2 *bullets, int *bullet_count, Vector2 bullet_spawn_position) {
   appendBullet(bullet_spawn_position, bullets, bullet_count);
 }
+
+int UpdateBulletPosition(Vector2 *bullets, int *bullet_count) {
+  for (int i = 0; i < *bullet_count; i++) {
+    bullets[i].y -= 10;
+  }
+
+  return 0;
+}
+
+int DrawBullets(Vector2 *bullets, int *bullet_count) {
+  for (int i = 0; i < *bullet_count; i++) {
+    DrawCircleV(bullets[i], 5, YELLOW);
+  }
+
+  return 0;
+}

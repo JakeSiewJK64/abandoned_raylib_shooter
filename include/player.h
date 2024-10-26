@@ -31,3 +31,7 @@ int DrawPlayer(GameObject *player);
  * @note Ensure the bullets array has enough space before calling this function.
  */
 void Fire(Vector2 *bullets, int *bullet_count, Vector2 bullet_spawn_position);
+
+int DrawBullets(Vector2 *bullets, int *bullet_count);
+
+int UpdateBulletPosition(Vector2 *bullets, int *bullet_count);
