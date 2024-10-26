@@ -1,0 +1,1 @@
+void InitializeConfigurations(int SCREEN_WIDTH, int SCREEN_HEIGHT);
