@@ -24,7 +24,11 @@ int RunGame(GameObject *player, Vector2 *bullets, int *bullet_count) {
 
   // only fire if space key down
   if (IsKeyDown(KEY_SPACE)) {
-    Fire(bullets, bullet_count, player->position);
+    Vector2 left_cannon = {player->position.x + 20, player->position.y + 40};
+    Vector2 right_cannon = {player->position.x + 70, player->position.y + 40};
+
+    Fire(bullets, bullet_count, left_cannon);
+    Fire(bullets, bullet_count, right_cannon);
   }
 
   DrawBullets(bullets, bullet_count);
