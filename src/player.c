@@ -1,6 +1,5 @@
 #include "../include/player.h"
 #include <raylib.h>
-#include <stdio.h>
 
 void UpdatePlayerPosition(GameObject *player) {
   if (IsKeyDown(KEY_D)) {
