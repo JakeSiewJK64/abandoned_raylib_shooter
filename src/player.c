@@ -21,8 +21,7 @@ int DrawPlayer(GameObject *player) {
   return 0;
 }
 
-int appendBullet(Vector2 new_bullet, Vector2 *bullets, int *bullet_count,
-                 int MAX_BULLETS) {
+int appendBullet(Vector2 new_bullet, Vector2 *bullets, int *bullet_count) {
   if (*bullet_count < MAX_BULLETS) {
     bullets[*bullet_count] = new_bullet; // set new bullet as last element
     (*bullet_count)++;                   // increment bullets
@@ -33,5 +32,5 @@ int appendBullet(Vector2 new_bullet, Vector2 *bullets, int *bullet_count,
 }
 
 void Fire(Vector2 *bullets, int *bullet_count, Vector2 bullet_spawn_position) {
-  appendBullet(bullet_spawn_position, bullets, bullet_count, 1000);
+  appendBullet(bullet_spawn_position, bullets, bullet_count);
 }

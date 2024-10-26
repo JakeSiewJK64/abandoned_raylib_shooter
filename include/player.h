@@ -1,6 +1,7 @@
 #include <raylib.h>
 
 #define PLAYER_SPEED 4.0f
+#define MAX_BULLETS 1000
 
 typedef struct GameObject {
   Texture2D texture;
