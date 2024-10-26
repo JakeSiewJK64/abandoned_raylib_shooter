@@ -52,7 +52,7 @@ int main() {
 
   // initialize bullet
   int bullet_count = 0;  // declare total bullet count spawned in the world
-  Vector2 bullets[1000]; // declare bullet list with a fixed size
+  Vector2 bullets[MAX_BULLETS]; // declare bullet list with a fixed size
 
   // initialize player
   Vector2 vector = {SCREEN_WIDTH / 2.f, SCREEN_HEIGHT - (.2f * SCREEN_WIDTH)};
