@@ -22,7 +22,11 @@ int RunGame(GameObject *player, Vector2 *bullets, int *bullet_count) {
   // draw the plane
   DrawPlayer(player);
 
-  Fire(bullets, bullet_count, player->position);
+  // only fire if space key down
+  if (IsKeyDown(KEY_SPACE)) {
+    Fire(bullets, bullet_count, player->position);
+  }
+
   DrawBullets(bullets, bullet_count);
   UpdateBulletPosition(bullets, bullet_count);
   DespawnBulletOutOfBounds(bullets, bullet_count, SCREEN_WIDTH, SCREEN_HEIGHT);
