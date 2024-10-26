@@ -15,9 +15,14 @@ int RunGame(GameObject *player, Vector2 *bullets, int *bullet_count) {
 
   // move player
   UpdatePlayerPosition(player);
+  player->distance_travelled++;
 
   BeginDrawing();
   ClearBackground(BLACK);
+
+  // draw player distance travelled
+  DrawText(TextFormat("Distance Travelled: %d", player->distance_travelled),
+           SCREEN_WIDTH, 40, 12, WHITE);
 
   // draw the plane
   DrawPlayer(player);
@@ -51,7 +56,7 @@ int main() {
   Texture2D plane = LoadTexture("assets/plane.png");
 
   // initialize bullet
-  int bullet_count = 0;  // declare total bullet count spawned in the world
+  int bullet_count = 0; // declare total bullet count spawned in the world
   Vector2 bullets[MAX_BULLETS]; // declare bullet list with a fixed size
 
   // initialize player
@@ -59,6 +64,7 @@ int main() {
   GameObject player;
   player.texture = plane;
   player.position = vector;
+  player.distance_travelled = 0;
 
   // main game loop
   while (!WindowShouldClose()) {

@@ -6,6 +6,7 @@
 typedef struct GameObject {
   Texture2D texture;
   Vector2 position;
+  int distance_travelled;
 } GameObject;
 
 void UpdatePlayerPosition(GameObject *player);
