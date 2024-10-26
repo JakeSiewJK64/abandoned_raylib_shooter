@@ -10,6 +10,14 @@ typedef struct GameObject {
 void UpdatePlayerPosition(GameObject *player);
 
 /**
+ * @brief Draws the player
+ *
+ * @param player Pointer to the player
+ *
+ */
+int DrawPlayer(GameObject *player);
+
+/**
  * @brief Fires a bullet from the specified position.
  *
  * Adds a new bullet to the bullets array and increments the bullet count.

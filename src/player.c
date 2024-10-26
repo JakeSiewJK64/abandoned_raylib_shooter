@@ -16,6 +16,11 @@ void UpdatePlayerPosition(GameObject *player) {
   }
 }
 
+int DrawPlayer(GameObject *player) {
+  DrawTextureEx(player->texture, player->position, 0, .2f, WHITE);
+  return 0;
+}
+
 int appendBullet(Vector2 new_bullet, Vector2 *bullets, int *bullet_count,
                  int MAX_BULLETS) {
   if (*bullet_count < MAX_BULLETS) {

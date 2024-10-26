@@ -19,7 +19,7 @@ int RunGame(GameObject *player) {
   ClearBackground(BLACK);
 
   // draw the plane
-  DrawTextureEx(player->texture, player->position, 0, .2f, WHITE);
+  DrawPlayer(player);
 
   EndDrawing();
   return 0;
