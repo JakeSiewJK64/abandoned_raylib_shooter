@@ -46,8 +46,6 @@ int main() {
 
   // initialize game configuration
   InitializeConfigurations(SCREEN_WIDTH, SCREEN_HEIGHT);
-  float screen_width = GetScreenWidth();
-  float screen_height = GetScreenHeight();
 
   // initialize assets
   Texture2D plane = LoadTexture("assets/plane.png");
@@ -57,7 +55,7 @@ int main() {
   Vector2 bullets[1000]; // declare bullet list with a fixed size
 
   // initialize player
-  Vector2 vector = {screen_width / 2, screen_height - (.2f * screen_width)};
+  Vector2 vector = {SCREEN_WIDTH / 2.f, SCREEN_HEIGHT - (.2f * SCREEN_WIDTH)};
   GameObject player;
   player.texture = plane;
   player.position = vector;
