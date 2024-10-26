@@ -20,20 +20,22 @@ int RunGame(GameObject *player, Vector2 *bullets, int *bullet_count) {
   BeginDrawing();
   ClearBackground(BLACK);
 
-  // draw player distance travelled
-  DrawText(TextFormat("Distance Travelled: %d", player->distance_travelled),
-           SCREEN_WIDTH, 40, 12, WHITE);
-
   // draw the plane
   DrawPlayer(player);
 
   // only fire if space key down
-  if (IsKeyDown(KEY_SPACE)) {
+  double current_time = GetTime();
+
+  if (IsKeyDown(KEY_SPACE) &&
+      current_time - player->last_shot_fired >= player->fire_rate) {
+
     Vector2 left_cannon = {player->position.x + 20, player->position.y + 40};
     Vector2 right_cannon = {player->position.x + 70, player->position.y + 40};
 
     Fire(bullets, bullet_count, left_cannon);
     Fire(bullets, bullet_count, right_cannon);
+
+    player->last_shot_fired = GetTime();
   }
 
   DrawBullets(bullets, bullet_count);
@@ -65,6 +67,8 @@ int main() {
   player.texture = plane;
   player.position = vector;
   player.distance_travelled = 0;
+  player.last_shot_fired = -1;
+  player.fire_rate = .2f;
 
   // main game loop
   while (!WindowShouldClose()) {

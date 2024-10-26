@@ -18,6 +18,13 @@ void UpdatePlayerPosition(GameObject *player) {
 
 int DrawPlayer(GameObject *player) {
   DrawTextureEx(player->texture, player->position, 0, .2f, WHITE);
+
+  int screen_width = GetScreenWidth() - 200;
+
+  // draw player distance travelled
+  DrawText(TextFormat("Distance Travelled: %d", player->distance_travelled),
+           screen_width, 40, 12, WHITE);
+
   return 0;
 }
 
