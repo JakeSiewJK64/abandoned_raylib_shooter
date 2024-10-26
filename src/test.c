@@ -7,28 +7,25 @@
 
 int test_player_fire() {
 
-  int bullet_count = 0; // declare total bullet count spawned in the world
-  Vector2 bullets[bullet_count]; // declare bullet list
+  int bullet_count = 0;  // declare total bullet count spawned in the world
+  Vector2 bullets[1000]; // declare bullet list with a fixed size
   Vector2 bullet_spawn_position = {10, 20};
 
   assert(bullets != NULL);
 
-  // fire for 2 times
-  Fire(bullets, &bullet_count, bullet_spawn_position);
-  assert(bullet_count == 1);
+  // Fire for 10 times
+  for (int i = 0; i < 10; i++) {
+    Fire(bullets, &bullet_count, bullet_spawn_position);
+  }
 
-  Fire(bullets, &bullet_count, bullet_spawn_position);
-  printf("%d\n", bullet_count);
-  assert(bullet_count == 2);
-
-  // assert(bullet_count == 2);
+  assert(bullet_count == 10);
 
   // iterate through bullet list
-  // for (int i = 0; i < bullet_count; i++) {
-  //   assert(&bullets[i] != NULL);
-  //   assert(bullets[i].x == 10);
-  //   assert(bullets[i].y == 20);
-  // }
+  for (int i = 0; i < bullet_count; i++) {
+    assert(&bullets[i] != NULL);
+    assert(bullets[i].x == 10);
+    assert(bullets[i].y == 20);
+  }
 
   return 0;
 }

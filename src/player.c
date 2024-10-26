@@ -25,9 +25,9 @@ int appendBullet(Vector2 new_bullet, Vector2 *bullets, int *bullet_count,
     return 0;
   }
 
-  return 1;
+  return 1; // Indicate failure to add bullet
 }
 
 void Fire(Vector2 *bullets, int *bullet_count, Vector2 bullet_spawn_position) {
-  appendBullet(bullet_spawn_position, bullets, bullet_count, 10);
+  appendBullet(bullet_spawn_position, bullets, bullet_count, 1000);
 }
