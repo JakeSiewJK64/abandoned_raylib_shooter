@@ -6,7 +6,7 @@
     {
       "label": "build",
       "type": "shell",
-      "command": "gcc -o build/myprogram.out src/* -l raylib -lGL -lm -lpthread -ldl -lrt -lX11"
+      "command": "gcc -g -o build/myprogram.out src/* -l raylib -lGL -lm -lpthread -ldl -lrt -lX11"
     }
   ]
 }
