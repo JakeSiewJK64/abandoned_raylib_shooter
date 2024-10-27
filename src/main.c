@@ -5,10 +5,6 @@
 #include <raylib.h>
 #include <stddef.h>
 
-#define SCREEN_WIDTH 600
-#define SCREEN_HEIGHT 800
-#define ENEMIES_COUNT 5
-
 // game renderer
 int RunGame(GameObject *player, GameObject enemies[]) {
 
