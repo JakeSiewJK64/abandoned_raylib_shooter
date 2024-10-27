@@ -1,6 +1,12 @@
 #pragma once
 #include <raylib.h>
 
+#ifndef DEBUG_MODE
+#define IN_DEBUG_MODE false // If DEBUG_MODE is not defined, set to false
+#else
+#define IN_DEBUG_MODE true // If DEBUG_MODE is defined, set to true
+#endif
+
 #define MAX_BULLETS 1000
 #define PLAYER_SPEED 4.0f
 #define MAX_BULLETS 1000

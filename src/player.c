@@ -69,9 +69,11 @@ void UpdatePlayerPosition(GameObject *player) {
 }
 
 int DrawPlayer(GameObject *player) {
-  // debug draw player hitbox
-  DrawRectangle(player->position.x, player->position.y, player->width,
-                player->height, RED);
+  if (IN_DEBUG_MODE) {
+    // debug draw player hitbox
+    DrawRectangle(player->position.x, player->position.y, player->width,
+                  player->height, RED);
+  }
 
   DrawTextureEx(player->texture, player->position, 0, .2f, WHITE);
 

@@ -1,9 +1,12 @@
 #include "../include/enemy.h"
 
 int DrawEnemy(GameObject *enemy) {
-  // draw debug hitbox
-  DrawRectangle(enemy->position.x, enemy->position.y, enemy->width,
-                enemy->height, RED);
+
+  if (IN_DEBUG_MODE) {
+    // draw debug hitbox
+    DrawRectangle(enemy->position.x, enemy->position.y, enemy->width,
+                  enemy->height, RED);
+  }
 
   // draw enemy texture if active
   DrawTextureEx(enemy->texture, enemy->position, 0, .2, WHITE);

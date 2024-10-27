@@ -14,13 +14,20 @@ TARGET = $(BINDIR)/myprogram.out
 # source files
 SOURCES = $(wildcard $(SRCDIR)/*.c)
 
+# Set DEBUG flag if debug=true is passed
+ifeq ($(debug), true)
+	CFLAGS = -DDEBUG_MODE
+else
+	CFLAGS =
+endif
+
 # default target
-all: $(TARGET) run
+all: clean $(TARGET) run
 
 # Rule to create the target binary
 $(TARGET): $(SOURCES)
 	@mkdir -p $(BINDIR)
-	$(CC) -o $(TARGET) $(SOURCES) $(LDFLAGS)
+	$(CC) $(CFLAGS) -o $(TARGET) $(SOURCES) $(LDFLAGS)
 
 # Clean the build files
 clean:
