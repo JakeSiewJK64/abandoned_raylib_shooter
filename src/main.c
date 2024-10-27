@@ -3,6 +3,7 @@
 #include "../include/test.h"
 #include <raylib.h>
 #include <stddef.h>
+#include <stdio.h>
 
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 800
@@ -69,10 +70,6 @@ int main() {
   // initialize assets
   Texture2D plane = LoadTexture("assets/plane.png");
 
-  // initialize bullet
-  int bullet_count = 0; // declare total bullet count spawned in the world
-  Vector2 bullets[MAX_BULLETS]; // declare bullet list with a fixed size
-
   // get play bpoundary
   PlayBoundary boundary = GetPlayBoundary();
 
@@ -86,10 +83,12 @@ int main() {
   player.fire_rate = .2f;
   player.height = 110;
   player.width = 95;
+  player.bullet_count = 0;
 
   // main game loop
   while (!WindowShouldClose()) {
-    RunGame(&player, bullets, &bullet_count);
+    printf("player bullet count: %d\n", player.bullet_count);
+    RunGame(&player, player.bullets, &player.bullet_count);
   }
 
   return 0;
