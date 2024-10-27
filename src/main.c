@@ -23,9 +23,6 @@ int RunGame(GameObject *player) {
   // detect player wall collision
   CheckPlayerWallCollision(player, boundary.top_left, boundary.bottom_right);
 
-  // increment player distance travelled
-  player->distance_travelled++;
-
   BeginDrawing();
   ClearBackground(BLACK);
 
