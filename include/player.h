@@ -6,12 +6,12 @@
 typedef struct GameObject {
   Texture2D texture;
   Vector2 position;
-  int distance_travelled;
+  Vector2 bullets[MAX_BULLETS];
   double last_shot_fired;
   double fire_rate;
+  int distance_travelled;
   int width;
   int height;
-  Vector2 bullets[MAX_BULLETS];
   int bullet_count;
 } GameObject;
 
