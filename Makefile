@@ -37,5 +37,9 @@ clean:
 run: $(TARGET)
 	./$(TARGET)
 
+# show project status
+show_project_stats:
+	@cloc --exclude-lang=JSON,make .
+
 # Phony targets
-.PHONY: all clean run
+.PHONY: all clean run show_project_stats
