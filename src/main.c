@@ -3,7 +3,6 @@
 #include "../include/test.h"
 #include <raylib.h>
 #include <stddef.h>
-#include <stdio.h>
 
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 800
@@ -87,7 +86,6 @@ int main() {
 
   // main game loop
   while (!WindowShouldClose()) {
-    printf("player bullet count: %d\n", player.bullet_count);
     RunGame(&player, player.bullets, &player.bullet_count);
   }
 
