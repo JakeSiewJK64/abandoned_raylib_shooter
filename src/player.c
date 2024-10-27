@@ -85,6 +85,24 @@ int DrawPlayer(GameObject *player) {
   return 0;
 }
 
+int DetectPlayerFireInput(GameObject *player) {
+  // only fire if space key down
+  const double current_time = GetTime();
+
+  if (IsKeyDown(KEY_SPACE) &&
+      current_time - player->last_shot_fired >= player->fire_rate) {
+
+    Vector2 left_cannon = {player->position.x + 20, player->position.y + 40};
+    Vector2 right_cannon = {player->position.x + 70, player->position.y + 40};
+
+    Fire(player->bullets, &player->bullet_count, left_cannon);
+    Fire(player->bullets, &player->bullet_count, right_cannon);
+
+    player->last_shot_fired = GetTime();
+  }
+  return 0;
+}
+
 int appendBullet(Vector2 new_bullet, Vector2 *bullets, int *bullet_count) {
   if (*bullet_count < MAX_BULLETS) {
     bullets[*bullet_count] = new_bullet; // set new bullet as last element

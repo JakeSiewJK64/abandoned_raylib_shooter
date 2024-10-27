@@ -57,3 +57,5 @@ int DespawnBulletOutOfBounds(Vector2 *bullets, int *bullet_count,
 
 int CheckPlayerWallCollision(GameObject *player, Vector2 top_left,
                              Vector2 bottom_right);
+
+int DetectPlayerFireInput(GameObject *player);
