@@ -66,13 +66,9 @@ int main() {
   // initialize game configuration
   InitializeConfigurations(SCREEN_WIDTH, SCREEN_HEIGHT);
 
-  // initialize assets
-  Texture2D plane = LoadTexture("assets/plane.png");
-
-  // get play bpoundary
-  PlayBoundary boundary = GetPlayBoundary();
-
   // initialize player
+  Texture2D plane = LoadTexture("assets/plane.png");
+  PlayBoundary boundary = GetPlayBoundary();
   Vector2 vector = {boundary.width / 2.f, boundary.height - 100};
   GameObject player;
   player.texture = plane;
