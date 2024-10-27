@@ -109,15 +109,15 @@ int UpdateEnemies(GameObject *player, GameObject enemies[]) {
         enemyFireBullet(enemy, player, current_time);
       }
 
-      // iterate and draw bullet
-      updateBullet(enemy);
-
       // destroy enemy if collide player bullet
       checkCollidingPlayerBullet(player, enemy);
-
-      DespawnBulletOutOfBounds(enemy->bullets, &enemy->bullet_count,
-                               boundary.top_left, boundary.bottom_right);
     }
+
+    // iterate and draw bullet
+    updateBullet(enemy);
+
+    DespawnBulletOutOfBounds(enemy->bullets, &enemy->bullet_count,
+                             boundary.top_left, boundary.bottom_right);
   }
 
   return 0;
