@@ -100,16 +100,18 @@ int DetectPlayerFireInput(GameObject *player) {
 
     Vector2 left_cannon = {player->position.x + 20, player->position.y + 40};
     Vector2 right_cannon = {player->position.x + 70, player->position.y + 40};
+    Bullet b1 = {left_cannon, 0};
+    Bullet b2 = {right_cannon, 0};
 
-    Fire(player->bullets, &player->bullet_count, left_cannon);
-    Fire(player->bullets, &player->bullet_count, right_cannon);
+    Fire(player->bullets, &player->bullet_count, b1);
+    Fire(player->bullets, &player->bullet_count, b2);
 
     player->last_shot_fired = GetTime();
   }
   return 0;
 }
 
-int appendBullet(Vector2 new_bullet, Vector2 *bullets, int *bullet_count) {
+int appendBullet(Bullet new_bullet, Bullet bullets[], int *bullet_count) {
   if (*bullet_count < MAX_BULLETS) {
     bullets[*bullet_count] = new_bullet; // set new bullet as last element
     (*bullet_count)++;                   // increment bullets
@@ -119,34 +121,36 @@ int appendBullet(Vector2 new_bullet, Vector2 *bullets, int *bullet_count) {
   return 1; // Indicate failure to add bullet
 }
 
-void Fire(Vector2 *bullets, int *bullet_count, Vector2 bullet_spawn_position) {
-  appendBullet(bullet_spawn_position, bullets, bullet_count);
+int Fire(Bullet bullets[], int *bullet_count, Bullet new_bullet) {
+  appendBullet(new_bullet, bullets, bullet_count);
+  return 0;
 }
 
-int UpdateBulletPosition(Vector2 *bullets, int *bullet_count) {
+int UpdateBulletPosition(Bullet bullets[], int *bullet_count) {
   for (int i = 0; i < *bullet_count; i++) {
-    bullets[i].y -= 10;
+    bullets[i].position.y -= 10;
   }
 
   return 0;
 }
 
-int DrawBullets(Vector2 *bullets, int *bullet_count) {
+int DrawBullets(Bullet bullets[], int *bullet_count) {
   for (int i = 0; i < *bullet_count; i++) {
-    DrawCircleV(bullets[i], 5, YELLOW);
+    DrawCircleV(bullets[i].position, 5, YELLOW);
   }
 
   return 0;
 }
 
-int DespawnBulletOutOfBounds(Vector2 *bullets, int *bullet_count,
+int DespawnBulletOutOfBounds(Bullet bullets[], int *bullet_count,
                              Vector2 top_left, Vector2 bottom_right) {
   for (int i = 0; i < *bullet_count; i++) {
-    Vector2 bullet_entity = bullets[i];
-    bool beyond_top_right =
-        bullet_entity.y < top_left.y || bullet_entity.x < top_left.x;
-    bool beyond_bottom_left =
-        bullet_entity.y > bottom_right.y || bullet_entity.x > bottom_right.x;
+    Bullet bullet_entity = bullets[i];
+
+    bool beyond_top_right = bullet_entity.position.y < top_left.y ||
+                            bullet_entity.position.x < top_left.x;
+    bool beyond_bottom_left = bullet_entity.position.y > bottom_right.y ||
+                              bullet_entity.position.x > bottom_right.x;
 
     if (beyond_top_right || beyond_bottom_left) {
       // Shift bullets down to overwrite the "despawned" bullet

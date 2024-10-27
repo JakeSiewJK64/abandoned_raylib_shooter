@@ -8,9 +8,9 @@
 int test_player_fire() {
 
   int fire_frequency = 10;
-  int bullet_count = 0;  // declare total bullet count spawned in the world
-  Vector2 bullets[1000]; // declare bullet list with a fixed size
-  Vector2 bullet_spawn_position = {10, 20};
+  int bullet_count = 0; // declare total bullet count spawned in the world
+  Bullet bullets[1000]; // declare bullet list with a fixed size
+  Bullet bullet_spawn_position = {10, 20};
 
   // TEST: bullet entity spawned successfully
   assert(bullets != NULL);
@@ -24,25 +24,26 @@ int test_player_fire() {
 
   for (int i = 0; i < bullet_count; i++) {
     assert(&bullets[i] != NULL);
-    assert(bullets[i].x == 10);
-    assert(bullets[i].y == 20);
+    assert(bullets[i].position.x == 10);
+    assert(bullets[i].position.y == 20);
   }
 
   // TEST: bullet travel
-  int original_y_coord = bullets[0].y;
+  int original_y_coord = bullets[0].position.y;
 
   UpdateBulletPosition(bullets, &bullet_count);
 
   for (int i = 0; i < fire_frequency; i++) {
-    assert(bullets[i].y != original_y_coord);
+    assert(bullets[i].position.y != original_y_coord);
   }
 
   // TEST: despawn bullets out of bounds
   int y_coords = 0;
   int y_limit = 100;
   Vector2 start_pos = {10, 0};
+  Bullet bullet = {start_pos, 0};
 
-  Fire(bullets, &bullet_count, start_pos);
+  Fire(bullets, &bullet_count, bullet);
 
   while (y_coords <= y_limit) {
     if (y_coords == y_limit) {
@@ -57,8 +58,8 @@ int test_player_fire() {
     UpdateBulletPosition(bullets, &bullet_count);
 
     // define top left and bottom right coordinates
-    Vector2 top_left = {0,0};
-    Vector2 bottom_right = {100,100};
+    Vector2 top_left = {0, 0};
+    Vector2 bottom_right = {100, 100};
 
     DespawnBulletOutOfBounds(bullets, &bullet_count, top_left, bottom_right);
 

@@ -31,7 +31,8 @@ int UpdateEnemies(GameObject *player, GameObject enemies[]) {
              player_bullet_index++) {
 
           // get bullet position
-          Vector2 player_bullet_position = player->bullets[player_bullet_index];
+          Vector2 player_bullet_position =
+              player->bullets[player_bullet_index].position;
 
           // get bullet hitbox
           Rectangle bullet_hitbox = {player_bullet_position.x,

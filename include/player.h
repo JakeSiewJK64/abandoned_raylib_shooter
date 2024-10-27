@@ -25,13 +25,13 @@ int DrawPlayer(GameObject *player);
  *
  * @note Ensure the bullets array has enough space before calling this function.
  */
-void Fire(Vector2 *bullets, int *bullet_count, Vector2 bullet_spawn_position);
+int Fire(Bullet bullets[], int *bullet_count, Bullet new_bullet);
 
-int DrawBullets(Vector2 *bullets, int *bullet_count);
+int DrawBullets(Bullet bullets[], int *bullet_count);
 
-int UpdateBulletPosition(Vector2 *bullets, int *bullet_count);
+int UpdateBulletPosition(Bullet bullets[], int *bullet_count);
 
-int DespawnBulletOutOfBounds(Vector2 *bullets, int *bullet_count,
+int DespawnBulletOutOfBounds(Bullet bullets[], int *bullet_count,
                              Vector2 top_left, Vector2 bottom_right);
 
 int CheckPlayerWallCollision(GameObject *player, Vector2 top_left,

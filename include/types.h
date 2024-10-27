@@ -20,10 +20,15 @@ typedef enum GAME_OBJECT_STATUS {
   INACTIVE = 1,
 } GAME_OBJECT_STATUS;
 
+typedef struct Bullet {
+  Vector2 position;
+  float angle;
+} Bullet;
+
 typedef struct GameObject {
   Texture2D texture;
   Vector2 position;
-  Vector2 bullets[MAX_BULLETS];
+  Bullet bullets[MAX_BULLETS];
   double last_shot_fired;
   double fire_rate;
   int distance_travelled;
