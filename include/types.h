@@ -20,9 +20,15 @@ typedef enum GAME_OBJECT_STATUS {
   INACTIVE = 1,
 } GAME_OBJECT_STATUS;
 
+typedef enum BULLET_SPEED {
+  SLOW = 1,
+  FAST = 5,
+} BULLET_SPEED;
+
 typedef struct Bullet {
   Vector2 position;
   float angle;
+  float velocity;
 } Bullet;
 
 typedef struct GameObject {

@@ -69,7 +69,7 @@ int main() {
   Texture2D turret_texture = LoadTexture("assets/turret.png");
 
   for (int i = 0; i < ENEMIES_COUNT; i++) {
-    size_t buffer = 30;
+    int buffer = 30;
     int x_pos = boundary.top_left.x + 200 + (i * buffer);
     int y_pos = 200 + (i * buffer);
     enemies[i].texture = turret_texture;
@@ -79,6 +79,9 @@ int main() {
     enemies[i].width = 38;
     enemies[i].height = 38;
     enemies[i].status = ACTIVE;
+    enemies[i].bullet_count = 0;
+    enemies[i].last_shot_fired = -1;
+    enemies[i].fire_rate = .7f;
   }
 
   // main game loop
