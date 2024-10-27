@@ -16,8 +16,8 @@ int RunGame(GameObject *player, Vector2 *bullets, int *bullet_count) {
   // define play boundary
   const int screenWidth = GetScreenWidth();
   const int screenHeight = GetScreenHeight();
-  const int rectWidth = screenWidth * .5;
-  const int rectHeight = screenHeight * .8;
+  const int rectWidth = screenWidth * .5;   // 50% of screen width
+  const int rectHeight = screenHeight * .8; // 80% of screen height
   const int rectX = screenWidth / 2 - rectWidth / 2;
   const int rectY = screenHeight / 2 - rectHeight / 2;
 
