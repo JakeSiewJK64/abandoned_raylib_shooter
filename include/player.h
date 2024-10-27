@@ -9,7 +9,18 @@ typedef struct GameObject {
   int distance_travelled;
   double last_shot_fired;
   double fire_rate;
+  int width;
+  int height;
 } GameObject;
+
+typedef struct PlayBoundary {
+  float width;
+  float height;
+  Vector2 top_left;
+  Vector2 bottom_right;
+} PlayBoundary;
+
+PlayBoundary GetPlayBoundary();
 
 void UpdatePlayerPosition(GameObject *player);
 
@@ -41,3 +52,6 @@ int UpdateBulletPosition(Vector2 *bullets, int *bullet_count);
 
 int DespawnBulletOutOfBounds(Vector2 *bullets, int *bullet_count,
                              Vector2 top_left, Vector2 bottom_right);
+
+int CheckPlayerWallCollision(GameObject *player, Vector2 top_left,
+                             Vector2 bottom_right);

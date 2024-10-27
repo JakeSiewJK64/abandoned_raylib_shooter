@@ -1,6 +1,54 @@
 #include "../include/player.h"
 #include <raylib.h>
 
+PlayBoundary GetPlayBoundary() {
+  // define play boundary
+  const float screen_width = GetScreenWidth();
+  const float screen_height = GetScreenHeight();
+  const float play_area_width = screen_width * .6f;
+  const float play_area_height = screen_height * .8f;
+  const float rectX = screen_width / 2 - play_area_width / 2;
+  const float rectY = screen_height / 2 - play_area_height / 2;
+  const Vector2 top_left = {rectX, rectY};
+  const Vector2 bottom_right = {rectX + play_area_width,
+                                rectY + play_area_height};
+
+  const PlayBoundary boundary = {play_area_width, play_area_height, top_left,
+                                 bottom_right};
+
+  return boundary;
+}
+
+// Define the Clamp function
+float Clamp(const float value, const float min, const float max) {
+  if (value < min) {
+    return min;
+  }
+
+  if (value > max) {
+    return max;
+  }
+
+  return value;
+}
+
+int CheckPlayerWallCollision(GameObject *player, const Vector2 top_left,
+                             const Vector2 bottom_right) {
+
+  // Clamp the player's position within the bounds,
+  // considering player's dimensions
+  const float clamped_x =
+      Clamp(player->position.x, top_left.x, bottom_right.x - player->width);
+  const float clamped_y =
+      Clamp(player->position.y, top_left.y, bottom_right.y - player->height);
+
+  // Update player position if clamped
+  player->position.x = clamped_x;
+  player->position.y = clamped_y;
+
+  return 0;
+}
+
 void UpdatePlayerPosition(GameObject *player) {
   if (IsKeyDown(KEY_D)) {
     player->position.x += PLAYER_SPEED;
@@ -17,13 +65,22 @@ void UpdatePlayerPosition(GameObject *player) {
 }
 
 int DrawPlayer(GameObject *player) {
+  // debug draw player hitbox
+  DrawRectangle(player->position.x, player->position.y, player->width,
+                player->height, RED);
+
   DrawTextureEx(player->texture, player->position, 0, .2f, WHITE);
 
   int screen_width = GetScreenWidth() - 200;
 
   // draw player distance travelled
   DrawText(TextFormat("Distance Travelled: %d", player->distance_travelled),
-           screen_width, 40, 12, WHITE);
+           screen_width, 40, 18, WHITE);
+
+  // draw player coordinates
+  DrawText(TextFormat("Position: \nX: %.0f\nY: %.0f\n", player->position.x,
+                      player->position.y),
+           screen_width, 60, 18, WHITE);
 
   return 0;
 }
