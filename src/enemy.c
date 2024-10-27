@@ -49,8 +49,10 @@ int enemyFireBullet(GameObject *enemy, GameObject *player,
   // set bullet information
   Bullet bullet;
   Vector2 start_pos;
-  start_pos.x = enemy->position.x + (enemy->width * .5f); // define start position of bullet
-  start_pos.y = enemy->position.y + (enemy->height * .5f); // define start position of bullet
+  start_pos.x = enemy->position.x +
+                (enemy->width * .5f); // define start position of bullet
+  start_pos.y = enemy->position.y +
+                (enemy->height * .5f); // define start position of bullet
   bullet.position = start_pos;
   bullet.angle = angle;
 
@@ -58,6 +60,33 @@ int enemyFireBullet(GameObject *enemy, GameObject *player,
   enemy->bullets[enemy->bullet_count] = bullet;
   enemy->bullet_count++;                 // increment bullet count
   enemy->last_shot_fired = current_time; // set time fired by enemy
+
+  return 0;
+}
+
+int checkCollidingPlayerBullet(GameObject *player, GameObject *enemy) {
+  // Check if collide with bullet
+  if (player->bullet_count > 0) {
+    for (int player_bullet_index = 0;
+         player_bullet_index < player->bullet_count; player_bullet_index++) {
+
+      // get bullet position
+      Vector2 player_bullet_position =
+          player->bullets[player_bullet_index].position;
+
+      // get bullet hitbox
+      Rectangle bullet_hitbox = {player_bullet_position.x,
+                                 player_bullet_position.y, 10, 10};
+
+      // get bullet hitbox
+      Rectangle enemy_hitbox = {enemy->position.x, enemy->position.y,
+                                enemy->width, enemy->height};
+
+      if (CheckCollisionRecs(bullet_hitbox, enemy_hitbox)) {
+        enemy->status = INACTIVE;
+      }
+    }
+  }
 
   return 0;
 }
@@ -83,32 +112,11 @@ int UpdateEnemies(GameObject *player, GameObject enemies[]) {
       // iterate and draw bullet
       updateBullet(enemy);
 
+      // destroy enemy if collide player bullet
+      checkCollidingPlayerBullet(player, enemy);
+
       DespawnBulletOutOfBounds(enemy->bullets, &enemy->bullet_count,
                                boundary.top_left, boundary.bottom_right);
-
-      // Check if collide with bullet
-      if (player->bullet_count > 0) {
-        for (int player_bullet_index = 0;
-             player_bullet_index < player->bullet_count;
-             player_bullet_index++) {
-
-          // get bullet position
-          Vector2 player_bullet_position =
-              player->bullets[player_bullet_index].position;
-
-          // get bullet hitbox
-          Rectangle bullet_hitbox = {player_bullet_position.x,
-                                     player_bullet_position.y, 10, 10};
-
-          // get bullet hitbox
-          Rectangle enemy_hitbox = {enemy->position.x, enemy->position.y,
-                                    enemy->width, enemy->height};
-
-          if (CheckCollisionRecs(bullet_hitbox, enemy_hitbox)) {
-            enemy->status = INACTIVE;
-          }
-        }
-      }
     }
   }
 
