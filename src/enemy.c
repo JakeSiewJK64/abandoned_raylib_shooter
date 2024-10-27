@@ -1,7 +1,5 @@
 #include "../include/enemy.h"
 
-#define ENEMIES_COUNT 5
-
 int DrawEnemy(GameObject *enemy) {
   // draw debug hitbox
   DrawRectangle(enemy->position.x, enemy->position.y, enemy->width,

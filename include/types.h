@@ -2,6 +2,12 @@
 #include <raylib.h>
 
 #define MAX_BULLETS 1000
+#define PLAYER_SPEED 4.0f
+#define MAX_BULLETS 1000
+#define ENEMIES_COUNT 5
+#define SCREEN_WIDTH 600
+#define SCREEN_HEIGHT 800
+#define ENEMIES_COUNT 5
 
 typedef enum GAME_OBJECT_STATUS {
   ACTIVE = 0,
