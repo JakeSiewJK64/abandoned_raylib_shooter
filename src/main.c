@@ -10,7 +10,7 @@
 #define MAX_BULLETS 1000
 
 // game renderer
-int RunGame(GameObject *player, Vector2 *bullets, int *bullet_count) {
+int RunGame(GameObject *player) {
 
   // define play boundary
   PlayBoundary boundary = GetPlayBoundary();
@@ -43,16 +43,16 @@ int RunGame(GameObject *player, Vector2 *bullets, int *bullet_count) {
     Vector2 left_cannon = {player->position.x + 20, player->position.y + 40};
     Vector2 right_cannon = {player->position.x + 70, player->position.y + 40};
 
-    Fire(bullets, bullet_count, left_cannon);
-    Fire(bullets, bullet_count, right_cannon);
+    Fire(player->bullets, &player->bullet_count, left_cannon);
+    Fire(player->bullets, &player->bullet_count, right_cannon);
 
     player->last_shot_fired = GetTime();
   }
 
-  DrawBullets(bullets, bullet_count);
-  UpdateBulletPosition(bullets, bullet_count);
-  DespawnBulletOutOfBounds(bullets, bullet_count, boundary.top_left,
-                           boundary.bottom_right);
+  DrawBullets(player->bullets, &player->bullet_count);
+  UpdateBulletPosition(player->bullets, &player->bullet_count);
+  DespawnBulletOutOfBounds(player->bullets, &player->bullet_count,
+                           boundary.top_left, boundary.bottom_right);
 
   EndDrawing();
   return 0;
@@ -86,7 +86,7 @@ int main() {
 
   // main game loop
   while (!WindowShouldClose()) {
-    RunGame(&player, player.bullets, &player.bullet_count);
+    RunGame(&player);
   }
 
   return 0;
