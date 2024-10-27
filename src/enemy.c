@@ -48,7 +48,9 @@ int enemyFireBullet(GameObject *enemy, GameObject *player,
 
   // set bullet information
   Bullet bullet;
-  Vector2 start_pos = enemy->position; // define start position of bullet
+  Vector2 start_pos;
+  start_pos.x = enemy->position.x + (enemy->width * .5f); // define start position of bullet
+  start_pos.y = enemy->position.y + (enemy->height * .5f); // define start position of bullet
   bullet.position = start_pos;
   bullet.angle = angle;
 
