@@ -1,9 +1,6 @@
 #include "../include/types.h"
 #include <raylib.h>
 
-#define PLAYER_SPEED 4.0f
-#define MAX_BULLETS 1000
-
 PlayBoundary GetPlayBoundary();
 
 void UpdatePlayerPosition(GameObject *player);
