@@ -11,7 +11,7 @@ typedef struct GameObject {
   double fire_rate;
   int width;
   int height;
-  Vector2 bullets[1000];
+  Vector2 bullets[MAX_BULLETS];
   int bullet_count;
 } GameObject;
 
