@@ -6,8 +6,6 @@
 
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 800
-#define INITIAL_BULLET_CAPACITY 1
-#define MAX_BULLETS 1000
 
 // game renderer
 int RunGame(GameObject *player) {
