@@ -40,4 +40,4 @@ int DrawBullets(Vector2 *bullets, int *bullet_count);
 int UpdateBulletPosition(Vector2 *bullets, int *bullet_count);
 
 int DespawnBulletOutOfBounds(Vector2 *bullets, int *bullet_count,
-                             int x_boundary, int y_boundary);
+                             Vector2 top_left, Vector2 bottom_right);

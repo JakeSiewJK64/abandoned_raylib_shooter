@@ -59,12 +59,15 @@ int DrawBullets(Vector2 *bullets, int *bullet_count) {
 }
 
 int DespawnBulletOutOfBounds(Vector2 *bullets, int *bullet_count,
-                             int x_boundary, int y_boundary) {
+                             Vector2 top_left, Vector2 bottom_right) {
   for (int i = 0; i < *bullet_count; i++) {
-    bool beyond_y = bullets[i].y < 0 || bullets[i].y > y_boundary;
-    bool beyond_x = bullets[i].x < 0 || bullets[i].x > x_boundary;
+    Vector2 bullet_entity = bullets[i];
+    bool beyond_top_right =
+        bullet_entity.y < top_left.y || bullet_entity.x < top_left.x;
+    bool beyond_bottom_left =
+        bullet_entity.y > bottom_right.y || bullet_entity.x > bottom_right.x;
 
-    if (beyond_y || beyond_x) {
+    if (beyond_top_right || beyond_bottom_left) {
       // Shift bullets down to overwrite the "despawned" bullet
       for (int j = i; j < *bullet_count - 1; j++) {
         bullets[j] = bullets[j + 1];

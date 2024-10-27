@@ -55,7 +55,12 @@ int test_player_fire() {
     }
 
     UpdateBulletPosition(bullets, &bullet_count);
-    DespawnBulletOutOfBounds(bullets, &bullet_count, 100, y_limit);
+
+    // define top left and bottom right coordinates
+    Vector2 top_left = {0,0};
+    Vector2 bottom_right = {100,100};
+
+    DespawnBulletOutOfBounds(bullets, &bullet_count, top_left, bottom_right);
 
     y_coords++;
   }

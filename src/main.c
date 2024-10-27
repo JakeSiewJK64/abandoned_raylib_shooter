@@ -13,6 +13,20 @@
 // game renderer
 int RunGame(GameObject *player, Vector2 *bullets, int *bullet_count) {
 
+  // define play boundary
+  const int screenWidth = GetScreenWidth();
+  const int screenHeight = GetScreenHeight();
+  const int rectWidth = screenWidth * .5;
+  const int rectHeight = screenHeight * .8;
+  const int rectX = screenWidth / 2 - rectWidth / 2;
+  const int rectY = screenHeight / 2 - rectHeight / 2;
+
+  Vector2 top_left = {rectX, rectY};
+  Vector2 bottom_right = {rectX + rectWidth, rectY + rectHeight};
+
+  // draw play boundary
+  DrawRectangle(rectX, rectY, rectWidth, rectHeight, SKYBLUE);
+
   // move player
   UpdatePlayerPosition(player);
   player->distance_travelled++;
@@ -24,7 +38,7 @@ int RunGame(GameObject *player, Vector2 *bullets, int *bullet_count) {
   DrawPlayer(player);
 
   // only fire if space key down
-  double current_time = GetTime();
+  const double current_time = GetTime();
 
   if (IsKeyDown(KEY_SPACE) &&
       current_time - player->last_shot_fired >= player->fire_rate) {
@@ -40,7 +54,7 @@ int RunGame(GameObject *player, Vector2 *bullets, int *bullet_count) {
 
   DrawBullets(bullets, bullet_count);
   UpdateBulletPosition(bullets, bullet_count);
-  DespawnBulletOutOfBounds(bullets, bullet_count, SCREEN_WIDTH, SCREEN_HEIGHT);
+  DespawnBulletOutOfBounds(bullets, bullet_count, top_left, bottom_right);
 
   EndDrawing();
   return 0;
