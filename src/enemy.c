@@ -14,9 +14,9 @@ int DrawEnemy(GameObject *enemy) {
 int UpdateEnemies(GameObject *player, GameObject enemies[]) {
   // iterate and draw enemies
   for (int i = 0; i < ENEMIES_COUNT; i++) {
-    if (enemies->status == ACTIVE) {
-      // Pointer to modify the enemy directly if needed
-      GameObject *enemy = &enemies[i];
+    GameObject *enemy = &enemies[i];
+
+    if (enemy->status == ACTIVE) {
 
       // Draw enemy
       DrawEnemy(enemy);
