@@ -6,15 +6,18 @@
 
 int updateBullet(Enemy *enemy) {
   // iterate and draw bullets
-  for (int b = 0; b < enemy->gameObject.bullet_count; b++) {
+  for (int enemy_index = 0; enemy_index < enemy->gameObject.bullet_count;
+       enemy_index++) {
 
     // calculate bullet trajectory
-    const float x_angle = -cos(enemy->gameObject.bullets[b].angle) * FAST;
-    const float y_angle = -sin(enemy->gameObject.bullets[b].angle) * FAST;
+    const float x_angle =
+        -cos(enemy->gameObject.bullets[enemy_index].angle) * FAST;
+    const float y_angle =
+        -sin(enemy->gameObject.bullets[enemy_index].angle) * FAST;
 
     // add force to bullet
-    enemy->gameObject.bullets[b].position.y += y_angle;
-    enemy->gameObject.bullets[b].position.x += x_angle;
+    enemy->gameObject.bullets[enemy_index].position.y += y_angle;
+    enemy->gameObject.bullets[enemy_index].position.x += x_angle;
   }
 
   return 0;
