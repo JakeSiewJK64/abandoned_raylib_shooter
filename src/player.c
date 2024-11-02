@@ -38,15 +38,7 @@ void UpdatePlayerPosition(GameObject *player) {
   }
 }
 
-int DrawPlayer(GameObject *player) {
-  if (IN_DEBUG_MODE) {
-    // debug draw player hitbox
-    DrawRectangle(player->position.x, player->position.y, player->width,
-                  player->height, RED);
-  }
-
-  DrawTextureEx(player->texture, player->position, 0, .2f, WHITE);
-
+int DrawStatus(GameObject *player) {
   int screen_width = GetScreenWidth() - 200;
 
   // draw player distance travelled
@@ -57,6 +49,20 @@ int DrawPlayer(GameObject *player) {
   DrawText(TextFormat("Position: \nX: %.0f\nY: %.0f\n", player->position.x,
                       player->position.y),
            screen_width, 60, 18, WHITE);
+
+  return 0;
+}
+
+int DrawPlayer(GameObject *player) {
+  if (IN_DEBUG_MODE) {
+    // debug draw player hitbox
+    DrawRectangle(player->position.x, player->position.y, player->width,
+                  player->height, RED);
+  }
+
+  DrawTextureEx(player->texture, player->position, 0, .2f, WHITE);
+
+  DrawStatus(player);
 
   // draw bullet
   DrawBullets(player->bullets, &player->bullet_count);
