@@ -4,24 +4,6 @@
 #include <math.h>
 #include <raylib.h>
 
-int DrawEnemy(GameObject *enemy) {
-
-  if (IN_DEBUG_MODE) {
-    // draw debug hitbox
-    DrawRectangle(enemy->position.x, enemy->position.y, enemy->width,
-                  enemy->height, RED);
-  }
-
-  // draw debug bullets spawned by enemy
-  DrawText(TextFormat(("Bullets: %d"), enemy->bullet_count),
-           enemy->position.x + 50, enemy->position.y, 12, WHITE);
-
-  // draw enemy texture
-  DrawTextureEx(enemy->texture, enemy->position, 0, .2, WHITE);
-
-  return 0;
-}
-
 int updateBullet(GameObject *enemy) {
   // iterate and draw bullets
   for (int b = 0; b < enemy->bullet_count; b++) {
@@ -33,21 +15,6 @@ int updateBullet(GameObject *enemy) {
     // add force to bullet
     enemy->bullets[b].position.y += y_angle;
     enemy->bullets[b].position.x += x_angle;
-  }
-
-  return 0;
-}
-
-int DrawEnemies(GameObject *enemies, int size) {
-  for (int i = 0; i < size; i++) {
-
-    // if the enemy is not dead, draw enemy
-    if (enemies[i].status == ACTIVE) {
-      DrawEnemy(&enemies[i]);
-    }
-
-    // Draw bullets
-    DrawBullets(enemies[i].bullets, &enemies[i].bullet_count);
   }
 
   return 0;
@@ -100,6 +67,39 @@ int checkCollidingPlayerBullet(GameObject *player, GameObject *enemy) {
         enemy->status = INACTIVE;
       }
     }
+  }
+
+  return 0;
+}
+
+int DrawEnemy(GameObject *enemy) {
+
+  if (IN_DEBUG_MODE) {
+    // draw debug hitbox
+    DrawRectangle(enemy->position.x, enemy->position.y, enemy->width,
+                  enemy->height, RED);
+  }
+
+  // draw debug bullets spawned by enemy
+  DrawText(TextFormat(("Bullets: %d"), enemy->bullet_count),
+           enemy->position.x + 50, enemy->position.y, 12, WHITE);
+
+  // draw enemy texture
+  DrawTextureEx(enemy->texture, enemy->position, 0, .2, WHITE);
+
+  return 0;
+}
+
+int DrawEnemies(GameObject *enemies, int size) {
+  for (int i = 0; i < size; i++) {
+
+    // if the enemy is not dead, draw enemy
+    if (enemies[i].status == ACTIVE) {
+      DrawEnemy(&enemies[i]);
+    }
+
+    // Draw bullets
+    DrawBullets(enemies[i].bullets, &enemies[i].bullet_count);
   }
 
   return 0;
