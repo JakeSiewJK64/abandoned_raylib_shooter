@@ -40,6 +40,17 @@ int updateBullet(GameObject *enemy) {
   return 0;
 }
 
+int DrawEnemies(GameObject *enemies, int size) {
+  for (int i = 0; i < size; i++) {
+    DrawEnemy(&enemies[i]);
+
+    // Draw bullets
+    updateBullet(&enemies[i]);
+  }
+
+  return 0;
+}
+
 int enemyFireBullet(GameObject *enemy, GameObject *player,
                     double current_time) {
   // Calculate angle between enemy and player
@@ -94,16 +105,13 @@ int checkCollidingPlayerBullet(GameObject *player, GameObject *enemy) {
 
 int UpdateEnemies(GameObject *player, GameObject enemies[]) {
   const double current_time = GetTime();
-  PlayBoundary boundary = GetPlayBoundary();
+  const PlayBoundary boundary = GetPlayBoundary();
 
   // iterate enemies
   for (int i = 0; i < ENEMIES_COUNT; i++) {
     GameObject *enemy = &enemies[i];
 
     if (enemy->status == ACTIVE) {
-
-      // Draw enemy
-      DrawEnemy(enemy);
 
       // fire a bullet at the player
       if (current_time - enemy->last_shot_fired > enemy->fire_rate) {
@@ -113,9 +121,6 @@ int UpdateEnemies(GameObject *player, GameObject enemies[]) {
       // destroy enemy if collide player bullet
       checkCollidingPlayerBullet(player, enemy);
     }
-
-    // iterate and draw bullet
-    updateBullet(enemy);
 
     DespawnBulletOutOfBounds(enemy->bullets, &enemy->bullet_count,
                              boundary.top_left, boundary.bottom_right);

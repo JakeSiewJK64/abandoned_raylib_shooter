@@ -17,7 +17,7 @@ int Draw(GameObject *player, GameObject enemies[]) {
   ClearBackground(BLACK);
 
   // draw the enemies
-  UpdateEnemies(player, enemies);
+  DrawEnemies(enemies, ENEMIES_COUNT);
 
   // draw the player
   DrawPlayer(player);
@@ -33,6 +33,9 @@ int RunGame(GameObject *player, GameObject enemies[]) {
   // update player logic each frame
   UpdatePlayer(player);
 
+  UpdateEnemies(player, enemies);
+
+  // Render the graphics
   Draw(player, enemies);
   return 0;
 }
