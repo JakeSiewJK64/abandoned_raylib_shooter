@@ -12,10 +12,11 @@ int DrawEnemy(GameObject *enemy) {
                   enemy->height, RED);
   }
 
+  // draw debug bullets spawned by enemy
   DrawText(TextFormat(("Bullets: %d"), enemy->bullet_count),
            enemy->position.x + 50, enemy->position.y, 12, WHITE);
 
-  // draw enemy texture if active
+  // draw enemy texture
   DrawTextureEx(enemy->texture, enemy->position, 0, .2, WHITE);
 
   return 0;
@@ -32,9 +33,6 @@ int updateBullet(GameObject *enemy) {
     // add force to bullet
     enemy->bullets[b].position.y += y_angle;
     enemy->bullets[b].position.x += x_angle;
-
-    DrawCircle(enemy->bullets[b].position.x, enemy->bullets[b].position.y, 12,
-               RED);
   }
 
   return 0;
@@ -42,10 +40,14 @@ int updateBullet(GameObject *enemy) {
 
 int DrawEnemies(GameObject *enemies, int size) {
   for (int i = 0; i < size; i++) {
-    DrawEnemy(&enemies[i]);
+
+    // if the enemy is not dead, draw enemy
+    if (enemies[i].status == ACTIVE) {
+      DrawEnemy(&enemies[i]);
+    }
 
     // Draw bullets
-    updateBullet(&enemies[i]);
+    DrawBullets(enemies[i].bullets, &enemies[i].bullet_count);
   }
 
   return 0;
@@ -121,6 +123,9 @@ int UpdateEnemies(GameObject *player, GameObject enemies[]) {
       // destroy enemy if collide player bullet
       checkCollidingPlayerBullet(player, enemy);
     }
+
+    // update bullets of enemies
+    updateBullet(&enemies[i]);
 
     DespawnBulletOutOfBounds(enemy->bullets, &enemy->bullet_count,
                              boundary.top_left, boundary.bottom_right);
