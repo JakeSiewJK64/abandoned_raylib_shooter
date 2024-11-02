@@ -14,5 +14,11 @@ int DrawEnemy(Enemy *enemy);
  *
  */
 int DrawEnemies(Enemy *enemies, int size);
-
+/**
+ * @brief updates the logical aspect of the enemy
+ *
+ * @param player - player game object. updates the enemies relative to
+ * the player
+ * @param enemies - array of enemies to update
+ */
 int UpdateEnemies(GameObject *player, Enemy enemies[]);
