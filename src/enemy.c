@@ -110,10 +110,15 @@ int DrawEnemy(Enemy *enemy) {
 }
 
 int DrawEnemies(Enemy *enemies, int size) {
+  PlayBoundary boundary = GetPlayBoundary();
   for (int i = 0; i < size; i++) {
 
     // if the enemy is not dead, draw enemy
-    if (enemies[i].gameObject.status == ACTIVE) {
+    const bool within_boundary =
+        enemies[i].gameObject.position.y > boundary.top_left.y &&
+        enemies[i].gameObject.position.y < boundary.bottom_right.y;
+
+    if (enemies[i].gameObject.status == ACTIVE && within_boundary) {
       DrawEnemy(&enemies[i]);
     }
 
