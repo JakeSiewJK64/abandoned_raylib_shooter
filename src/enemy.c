@@ -46,6 +46,17 @@ int enemyFireBullet(Enemy *enemy, GameObject *player, double current_time) {
   return 0;
 }
 
+int updateEnemyPosition(Enemy *enemy) {
+  switch (enemy->type) {
+  case DRONE:
+    enemy->gameObject.position.y += 2;
+    break;
+  default:
+    break;
+  }
+  return 0;
+}
+
 int checkCollidingPlayerBullet(GameObject *player, Enemy *enemy) {
   // Check if collide with bullet
   if (player->bullet_count > 0) {
@@ -119,6 +130,9 @@ int UpdateEnemies(GameObject *player, Enemy enemies[]) {
     Enemy *enemy = &enemies[i];
 
     if (enemy->gameObject.status == ACTIVE) {
+
+      // update position of enemy
+      updateEnemyPosition(enemy);
 
       // fire a bullet at the player
       if (current_time - enemy->gameObject.last_shot_fired >
