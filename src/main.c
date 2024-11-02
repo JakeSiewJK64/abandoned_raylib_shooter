@@ -6,6 +6,7 @@
 #include <raylib.h>
 #include <stddef.h>
 
+// render game graphics
 int Draw(GameObject *player, GameObject enemies[]) {
   BeginDrawing();
 
@@ -26,7 +27,7 @@ int Draw(GameObject *player, GameObject enemies[]) {
   return 0;
 }
 
-// game renderer
+// update game logic
 int RunGame(GameObject *player, GameObject enemies[]) {
 
   // update player logic each frame
