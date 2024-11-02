@@ -1,6 +1,14 @@
 #pragma once
 #include <raylib.h>
 
+// define test mode
+#ifndef TEST_MODE
+#define IN_TEST_MODE false // If TEST_MODE is not defined, set to false
+#else
+#define IN_TEST_MODE true // If TEST_MODE is defined, set to true
+#endif
+
+// define debug mode
 #ifndef DEBUG_MODE
 #define IN_DEBUG_MODE false // If DEBUG_MODE is not defined, set to false
 #else

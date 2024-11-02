@@ -17,6 +17,8 @@ SOURCES = $(wildcard $(SRCDIR)/*.c)
 # Set DEBUG flag if debug=true is passed
 ifeq ($(debug), true)
 	CFLAGS = -DDEBUG_MODE
+else ifeq ($(test), true)
+	CFLAGS = -DTEST_MODE
 else
 	CFLAGS =
 endif

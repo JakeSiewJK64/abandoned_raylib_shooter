@@ -46,7 +46,10 @@ int RunGame(GameObject *player, GameObject enemies[]) {
 int main() {
 
   // run unit tests
-  test_runner();
+  if (IN_TEST_MODE) {
+    test_runner();
+    return 0;
+  }
 
   // initialize game configuration
   InitializeConfigurations(SCREEN_WIDTH, SCREEN_HEIGHT);
