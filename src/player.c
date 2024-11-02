@@ -60,8 +60,10 @@ int DrawPlayer(GameObject *player) {
                   player->height, RED);
   }
 
+  // render player texture
   DrawTextureEx(player->texture, player->position, 0, .2f, WHITE);
 
+  // Draw player status information
   DrawStatus(player);
 
   // draw bullet
