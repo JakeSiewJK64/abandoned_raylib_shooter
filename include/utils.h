@@ -11,3 +11,5 @@ int UpdateBulletPosition(Bullet bullets[], int *bullet_count);
 
 int DespawnBulletOutOfBounds(Bullet bullets[], int *bullet_count,
                              Vector2 top_left, Vector2 bottom_right);
+
+int DrawPlayBoundary();

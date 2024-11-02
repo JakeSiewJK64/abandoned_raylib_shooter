@@ -29,3 +29,11 @@ int CheckPlayerWallCollision(GameObject *player, Vector2 top_left,
                              Vector2 bottom_right);
 
 int DetectPlayerFireInput(GameObject *player);
+
+/**
+ * @brief All in one function to handle player logic
+ *
+ * @param player - player game object
+ *
+ */
+int UpdatePlayer(GameObject *player);

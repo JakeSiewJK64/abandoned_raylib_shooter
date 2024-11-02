@@ -85,3 +85,14 @@ float Clamp(const float value, const float min, const float max) {
 
   return value;
 }
+
+int DrawPlayBoundary() {
+  // define play boundary
+  PlayBoundary boundary = GetPlayBoundary();
+
+  // draw play boundary
+  DrawRectangle(boundary.top_left.x, boundary.top_left.y, boundary.width,
+                boundary.height, SKYBLUE);
+
+  return 0;
+}

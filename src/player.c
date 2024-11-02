@@ -58,6 +58,9 @@ int DrawPlayer(GameObject *player) {
                       player->position.y),
            screen_width, 60, 18, WHITE);
 
+  // draw bullet
+  DrawBullets(player->bullets, &player->bullet_count);
+
   return 0;
 }
 
@@ -78,5 +81,28 @@ int DetectPlayerFireInput(GameObject *player) {
 
     player->last_shot_fired = GetTime();
   }
+  return 0;
+}
+
+int UpdatePlayer(GameObject *player) {
+
+  // define play boundary
+  PlayBoundary boundary = GetPlayBoundary();
+
+  // move player
+  UpdatePlayerPosition(player);
+
+  // detect player wall collision
+  CheckPlayerWallCollision(player, boundary.top_left, boundary.bottom_right);
+
+  // update player bullet
+  UpdateBulletPosition(player->bullets, &player->bullet_count);
+
+  // check and despawn bullet out of bounds
+  DespawnBulletOutOfBounds(player->bullets, &player->bullet_count,
+                           boundary.top_left, boundary.bottom_right);
+
+  // detect player fire input
+  DetectPlayerFireInput(player);
   return 0;
 }

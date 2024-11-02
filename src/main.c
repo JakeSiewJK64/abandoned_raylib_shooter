@@ -6,40 +6,33 @@
 #include <raylib.h>
 #include <stddef.h>
 
+int Draw(GameObject *player, GameObject enemies[]) {
+  BeginDrawing();
+
+  // draw play boundary
+  DrawPlayBoundary();
+
+  // refresh the background
+  ClearBackground(BLACK);
+
+  // draw the enemies
+  UpdateEnemies(player, enemies);
+
+  // draw the player
+  DrawPlayer(player);
+
+  EndDrawing();
+
+  return 0;
+}
+
 // game renderer
 int RunGame(GameObject *player, GameObject enemies[]) {
 
-  // define play boundary
-  PlayBoundary boundary = GetPlayBoundary();
+  // update player logic each frame
+  UpdatePlayer(player);
 
-  // draw play boundary
-  DrawRectangle(boundary.top_left.x, boundary.top_left.y, boundary.width,
-                boundary.height, SKYBLUE);
-
-  // move player
-  UpdatePlayerPosition(player);
-
-  // detect player wall collision
-  CheckPlayerWallCollision(player, boundary.top_left, boundary.bottom_right);
-
-  BeginDrawing();
-  ClearBackground(BLACK);
-
-  // update enemies
-  UpdateEnemies(player, enemies);
-
-  // draw the plane
-  DrawPlayer(player);
-
-  // detect player fire input
-  DetectPlayerFireInput(player);
-
-  DrawBullets(player->bullets, &player->bullet_count);
-  UpdateBulletPosition(player->bullets, &player->bullet_count);
-  DespawnBulletOutOfBounds(player->bullets, &player->bullet_count,
-                           boundary.top_left, boundary.bottom_right);
-
-  EndDrawing();
+  Draw(player, enemies);
   return 0;
 }
 
