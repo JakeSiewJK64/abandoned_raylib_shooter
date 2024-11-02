@@ -48,7 +48,8 @@ int enemyFireBullet(Enemy *enemy, GameObject *player, double current_time) {
 
 int updateEnemyPosition(Enemy *enemy) {
   switch (enemy->type) {
-  case DRONE:
+  case TURRET:
+    // if normal turret, just move straight
     enemy->gameObject.position.y += 2;
     break;
   default:

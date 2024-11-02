@@ -83,6 +83,7 @@ int main() {
     enemies[i].gameObject.bullet_count = 0;
     enemies[i].gameObject.last_shot_fired = -1;
     enemies[i].gameObject.fire_rate = .7f;
+    enemies[i].type = TURRET;
   }
 
   // main game loop
