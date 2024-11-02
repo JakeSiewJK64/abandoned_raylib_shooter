@@ -4,48 +4,49 @@
 #include <math.h>
 #include <raylib.h>
 
-int updateBullet(GameObject *enemy) {
+int updateBullet(Enemy *enemy) {
   // iterate and draw bullets
-  for (int b = 0; b < enemy->bullet_count; b++) {
+  for (int b = 0; b < enemy->gameObject.bullet_count; b++) {
 
     // calculate bullet trajectory
-    const float x_angle = -cos(enemy->bullets[b].angle) * FAST;
-    const float y_angle = -sin(enemy->bullets[b].angle) * FAST;
+    const float x_angle = -cos(enemy->gameObject.bullets[b].angle) * FAST;
+    const float y_angle = -sin(enemy->gameObject.bullets[b].angle) * FAST;
 
     // add force to bullet
-    enemy->bullets[b].position.y += y_angle;
-    enemy->bullets[b].position.x += x_angle;
+    enemy->gameObject.bullets[b].position.y += y_angle;
+    enemy->gameObject.bullets[b].position.x += x_angle;
   }
 
   return 0;
 }
 
-int enemyFireBullet(GameObject *enemy, GameObject *player,
-                    double current_time) {
+int enemyFireBullet(Enemy *enemy, GameObject *player, double current_time) {
   // Calculate angle between enemy and player
-  float deltaX = enemy->position.x - player->position.x;
-  float deltaY = enemy->position.y - player->position.y;
+  float deltaX = enemy->gameObject.position.x - player->position.x;
+  float deltaY = enemy->gameObject.position.y - player->position.y;
   float angle = atan2(deltaY, deltaX); // Angle in radians
 
   // set bullet information
   Bullet bullet;
   Vector2 start_pos;
-  start_pos.x = enemy->position.x +
-                (enemy->width * .5f); // define start position of bullet
-  start_pos.y = enemy->position.y +
-                (enemy->height * .5f); // define start position of bullet
+  start_pos.x =
+      enemy->gameObject.position.x +
+      (enemy->gameObject.width * .5f); // define start position of bullet
+  start_pos.y =
+      enemy->gameObject.position.y +
+      (enemy->gameObject.height * .5f); // define start position of bullet
   bullet.position = start_pos;
   bullet.angle = angle;
 
   // set enemy information after firing a bullet
-  enemy->bullets[enemy->bullet_count] = bullet;
-  enemy->bullet_count++;                 // increment bullet count
-  enemy->last_shot_fired = current_time; // set time fired by enemy
+  enemy->gameObject.bullets[enemy->gameObject.bullet_count] = bullet;
+  enemy->gameObject.bullet_count++;                 // increment bullet count
+  enemy->gameObject.last_shot_fired = current_time; // set time fired by enemy
 
   return 0;
 }
 
-int checkCollidingPlayerBullet(GameObject *player, GameObject *enemy) {
+int checkCollidingPlayerBullet(GameObject *player, Enemy *enemy) {
   // Check if collide with bullet
   if (player->bullet_count > 0) {
     for (int player_bullet_index = 0;
@@ -60,11 +61,12 @@ int checkCollidingPlayerBullet(GameObject *player, GameObject *enemy) {
                                  player_bullet_position.y, 10, 10};
 
       // get bullet hitbox
-      Rectangle enemy_hitbox = {enemy->position.x, enemy->position.y,
-                                enemy->width, enemy->height};
+      Rectangle enemy_hitbox = {
+          enemy->gameObject.position.x, enemy->gameObject.position.y,
+          enemy->gameObject.width, enemy->gameObject.height};
 
       if (CheckCollisionRecs(bullet_hitbox, enemy_hitbox)) {
-        enemy->status = INACTIVE;
+        enemy->gameObject.status = INACTIVE;
       }
     }
   }
@@ -72,51 +74,55 @@ int checkCollidingPlayerBullet(GameObject *player, GameObject *enemy) {
   return 0;
 }
 
-int DrawEnemy(GameObject *enemy) {
+int DrawEnemy(Enemy *enemy) {
 
   if (IN_DEBUG_MODE) {
     // draw debug hitbox
-    DrawRectangle(enemy->position.x, enemy->position.y, enemy->width,
-                  enemy->height, RED);
+    DrawRectangle(enemy->gameObject.position.x, enemy->gameObject.position.y,
+                  enemy->gameObject.width, enemy->gameObject.height, RED);
   }
 
   // draw debug bullets spawned by enemy
-  DrawText(TextFormat(("Bullets: %d"), enemy->bullet_count),
-           enemy->position.x + 50, enemy->position.y, 12, WHITE);
+  DrawText(TextFormat(("Bullets: %d"), enemy->gameObject.bullet_count),
+           enemy->gameObject.position.x + 50, enemy->gameObject.position.y, 12,
+           WHITE);
 
   // draw enemy texture
-  DrawTextureEx(enemy->texture, enemy->position, 0, .2, WHITE);
+  DrawTextureEx(enemy->gameObject.texture, enemy->gameObject.position, 0, .2,
+                WHITE);
 
   return 0;
 }
 
-int DrawEnemies(GameObject *enemies, int size) {
+int DrawEnemies(Enemy *enemies, int size) {
   for (int i = 0; i < size; i++) {
 
     // if the enemy is not dead, draw enemy
-    if (enemies[i].status == ACTIVE) {
+    if (enemies[i].gameObject.status == ACTIVE) {
       DrawEnemy(&enemies[i]);
     }
 
     // Draw bullets
-    DrawBullets(enemies[i].bullets, &enemies[i].bullet_count, RED, 5);
+    DrawBullets(enemies[i].gameObject.bullets,
+                &enemies[i].gameObject.bullet_count, RED, 5);
   }
 
   return 0;
 }
 
-int UpdateEnemies(GameObject *player, GameObject enemies[]) {
+int UpdateEnemies(GameObject *player, Enemy enemies[]) {
   const double current_time = GetTime();
   const PlayBoundary boundary = GetPlayBoundary();
 
   // iterate enemies
   for (int i = 0; i < ENEMIES_COUNT; i++) {
-    GameObject *enemy = &enemies[i];
+    Enemy *enemy = &enemies[i];
 
-    if (enemy->status == ACTIVE) {
+    if (enemy->gameObject.status == ACTIVE) {
 
       // fire a bullet at the player
-      if (current_time - enemy->last_shot_fired > enemy->fire_rate) {
+      if (current_time - enemy->gameObject.last_shot_fired >
+          enemy->gameObject.fire_rate) {
         enemyFireBullet(enemy, player, current_time);
       }
 
@@ -127,8 +133,9 @@ int UpdateEnemies(GameObject *player, GameObject enemies[]) {
     // update bullets of enemies
     updateBullet(&enemies[i]);
 
-    DespawnBulletOutOfBounds(enemy->bullets, &enemy->bullet_count,
-                             boundary.top_left, boundary.bottom_right);
+    DespawnBulletOutOfBounds(enemy->gameObject.bullets,
+                             &enemy->gameObject.bullet_count, boundary.top_left,
+                             boundary.bottom_right);
   }
 
   return 0;

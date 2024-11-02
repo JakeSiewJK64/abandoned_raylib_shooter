@@ -6,13 +6,13 @@
  * @param GameObject - game object of the enemy
  *
  */
-int DrawEnemy(GameObject *enemy);
+int DrawEnemy(Enemy *enemy);
 /**
  * @brief draws an array of enemies
  *
  * @param GameObject - game object of the enemy
  *
  */
-int DrawEnemies(GameObject enemies[], int size);
+int DrawEnemies(Enemy *enemies, int size);
 
-int UpdateEnemies(GameObject *player, GameObject enemies[]);
+int UpdateEnemies(GameObject *player, Enemy enemies[]);

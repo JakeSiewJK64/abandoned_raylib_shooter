@@ -28,6 +28,8 @@ typedef enum GAME_OBJECT_STATUS {
   INACTIVE = 1,
 } GAME_OBJECT_STATUS;
 
+typedef enum ENEMY_TYPE { TURRET, DRONE } ENEMY_TYPE;
+
 typedef enum BULLET_SPEED {
   SLOW = 1,
   FAST = 5,
@@ -51,6 +53,11 @@ typedef struct GameObject {
   int bullet_count;
   GAME_OBJECT_STATUS status;
 } GameObject;
+
+typedef struct Enemy {
+  ENEMY_TYPE type;
+  GameObject gameObject;
+} Enemy;
 
 typedef struct PlayBoundary {
   float width;

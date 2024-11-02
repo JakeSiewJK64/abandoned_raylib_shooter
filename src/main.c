@@ -7,7 +7,7 @@
 #include <stddef.h>
 
 // render game graphics
-int Draw(GameObject *player, GameObject enemies[]) {
+int Draw(GameObject *player, Enemy enemies[]) {
   BeginDrawing();
 
   // draw play boundary
@@ -28,7 +28,7 @@ int Draw(GameObject *player, GameObject enemies[]) {
 }
 
 // update game logic
-int RunGame(GameObject *player, GameObject enemies[]) {
+int RunGame(GameObject *player, Enemy enemies[]) {
 
   // update player logic each frame
   UpdatePlayer(player);
@@ -66,23 +66,23 @@ int main() {
   player.bullet_count = 0;
 
   // initialize enemies
-  GameObject enemies[ENEMIES_COUNT];
+  Enemy enemies[ENEMIES_COUNT];
   Texture2D turret_texture = LoadTexture("assets/turret.png");
 
   for (int i = 0; i < ENEMIES_COUNT; i++) {
     int buffer = 30;
     int x_pos = boundary.top_left.x + 200 + (i * buffer);
     int y_pos = 200 + (i * buffer);
-    enemies[i].texture = turret_texture;
+    enemies[i].gameObject.texture = turret_texture;
 
     Vector2 turret_vector = {x_pos, y_pos};
-    enemies[i].position = turret_vector;
-    enemies[i].width = 38;
-    enemies[i].height = 38;
-    enemies[i].status = ACTIVE;
-    enemies[i].bullet_count = 0;
-    enemies[i].last_shot_fired = -1;
-    enemies[i].fire_rate = .7f;
+    enemies[i].gameObject.position = turret_vector;
+    enemies[i].gameObject.width = 38;
+    enemies[i].gameObject.height = 38;
+    enemies[i].gameObject.status = ACTIVE;
+    enemies[i].gameObject.bullet_count = 0;
+    enemies[i].gameObject.last_shot_fired = -1;
+    enemies[i].gameObject.fire_rate = .7f;
   }
 
   // main game loop
