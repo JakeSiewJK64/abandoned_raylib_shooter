@@ -1,7 +1,7 @@
 #include "../include/types.h"
 #include <raylib.h>
 
-void UpdatePlayerPosition(GameObject *player);
+int UpdatePlayerPosition(GameObject *player);
 
 /**
  * @brief Draws the player

@@ -19,7 +19,7 @@ int CheckPlayerWallCollision(GameObject *player, const Vector2 top_left,
   return 0;
 }
 
-void UpdatePlayerPosition(GameObject *player) {
+int UpdatePlayerPosition(GameObject *player) {
 
   // increment player distance travelled
   player->distance_travelled++;
@@ -36,6 +36,8 @@ void UpdatePlayerPosition(GameObject *player) {
   if (IsKeyDown(KEY_S)) {
     player->position.y += PLAYER_SPEED;
   }
+
+  return 0;
 }
 
 int DrawStatus(GameObject *player) {

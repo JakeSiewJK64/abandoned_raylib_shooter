@@ -1,1 +1,1 @@
-void InitializeConfigurations(int screen_width, int screen_height);
+int InitializeConfigurations(int screen_width, int screen_height);
