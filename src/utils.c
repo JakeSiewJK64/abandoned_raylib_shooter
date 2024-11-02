@@ -1,4 +1,5 @@
 #include "../include/utils.h"
+#include <raylib.h>
 
 int appendBullet(Bullet new_bullet, Bullet bullets[], int *bullet_count) {
   if (*bullet_count < MAX_BULLETS) {
@@ -60,8 +61,8 @@ PlayBoundary GetPlayBoundary() {
   // define play boundary
   const float screen_width = GetScreenWidth();
   const float screen_height = GetScreenHeight();
-  const float play_area_width = screen_width * .6f;
-  const float play_area_height = screen_height * .8f;
+  const float play_area_width = SCREEN_WIDTH;
+  const float play_area_height = screen_height;
   const float rectX = screen_width / 2 - play_area_width / 2;
   const float rectY = screen_height / 2 - play_area_height / 2;
   const Vector2 top_left = {rectX, rectY};
