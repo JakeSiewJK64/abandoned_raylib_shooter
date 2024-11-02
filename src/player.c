@@ -69,7 +69,7 @@ int DrawPlayer(GameObject *player) {
   DrawStatus(player);
 
   // draw bullet
-  DrawBullets(player->bullets, &player->bullet_count);
+  DrawBullets(player->bullets, &player->bullet_count, YELLOW, 2.f);
 
   return 0;
 }

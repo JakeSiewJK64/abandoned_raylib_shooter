@@ -23,9 +23,9 @@ int UpdateBulletPosition(Bullet bullets[], int *bullet_count) {
   return 0;
 }
 
-int DrawBullets(Bullet bullets[], int *bullet_count) {
+int DrawBullets(Bullet bullets[], int *bullet_count, Color color, float radius) {
   for (int i = 0; i < *bullet_count; i++) {
-    DrawCircleV(bullets[i].position, 5, YELLOW);
+    DrawCircleV(bullets[i].position, radius, color);
   }
 
   return 0;

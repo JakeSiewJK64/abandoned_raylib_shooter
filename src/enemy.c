@@ -99,7 +99,7 @@ int DrawEnemies(GameObject *enemies, int size) {
     }
 
     // Draw bullets
-    DrawBullets(enemies[i].bullets, &enemies[i].bullet_count);
+    DrawBullets(enemies[i].bullets, &enemies[i].bullet_count, RED, 5);
   }
 
   return 0;
