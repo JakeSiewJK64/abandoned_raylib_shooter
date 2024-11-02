@@ -6,6 +6,21 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define COLOR_BOLD "\e[1m"
+#define COLOR_BOLD_OFF "\e[m"
+
+int log_test_title(char *title) {
+  printf("TEST: %s", title);
+  return 0;
+}
+
+int assert_passed() {
+  printf(" --- ");
+  printf(COLOR_BOLD "\033[42;30m%s\033[0m", " PASSED " COLOR_BOLD_OFF);
+  printf(" ✓\n");
+  return 0;
+}
+
 int test_player_fire() {
 
   int fire_frequency = 10;
@@ -14,6 +29,8 @@ int test_player_fire() {
   Bullet bullet_spawn_position = {10, 20};
 
   // TEST: bullet entity spawned successfully
+  log_test_title("bullet entity spawned successfully");
+  
   assert(bullets != NULL);
 
   // Fire for 10 times
@@ -29,7 +46,10 @@ int test_player_fire() {
     assert(bullets[i].position.y == 20);
   }
 
+  assert_passed();
   // TEST: bullet travel
+  log_test_title("bullet travel");
+
   int original_y_coord = bullets[0].position.y;
 
   UpdateBulletPosition(bullets, &bullet_count);
@@ -38,7 +58,9 @@ int test_player_fire() {
     assert(bullets[i].position.y != original_y_coord);
   }
 
+  assert_passed();
   // TEST: despawn bullets out of bounds
+  log_test_title("despawn bullets out of bounds.");
   int y_coords = 0;
   int y_limit = 100;
   Vector2 start_pos = {10, 0};
@@ -66,6 +88,7 @@ int test_player_fire() {
 
     y_coords++;
   }
+  assert_passed();
 
   return 0;
 }
