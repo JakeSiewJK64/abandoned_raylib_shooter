@@ -1,8 +1,6 @@
 #include "../include/types.h"
 #include <raylib.h>
 
-PlayBoundary GetPlayBoundary();
-
 void UpdatePlayerPosition(GameObject *player);
 
 /**
@@ -26,13 +24,6 @@ int DrawPlayer(GameObject *player);
  * @note Ensure the bullets array has enough space before calling this function.
  */
 int Fire(Bullet bullets[], int *bullet_count, Bullet new_bullet);
-
-int DrawBullets(Bullet bullets[], int *bullet_count);
-
-int UpdateBulletPosition(Bullet bullets[], int *bullet_count);
-
-int DespawnBulletOutOfBounds(Bullet bullets[], int *bullet_count,
-                             Vector2 top_left, Vector2 bottom_right);
 
 int CheckPlayerWallCollision(GameObject *player, Vector2 top_left,
                              Vector2 bottom_right);

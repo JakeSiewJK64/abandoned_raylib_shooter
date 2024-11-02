@@ -1,5 +1,6 @@
 #include "../include/test.h"
 #include "../include/player.h"
+#include "../include/utils.h"
 #include <assert.h>
 #include <raylib.h>
 #include <stdio.h>

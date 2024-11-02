@@ -2,6 +2,7 @@
 #include "../include/initializer.h"
 #include "../include/player.h"
 #include "../include/test.h"
+#include "../include/utils.h"
 #include <raylib.h>
 #include <stddef.h>
 

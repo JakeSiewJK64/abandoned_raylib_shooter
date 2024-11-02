@@ -1,5 +1,6 @@
 #include "../include/enemy.h"
 #include "../include/player.h"
+#include "../include/utils.h"
 #include <math.h>
 #include <raylib.h>
 
