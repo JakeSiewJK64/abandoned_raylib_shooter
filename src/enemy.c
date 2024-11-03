@@ -113,8 +113,9 @@ int checkCollidingPlayerBullet(GameObject *player, Enemy *enemy) {
           enemy->gameObject.position.x, enemy->gameObject.position.y,
           enemy->gameObject.width, enemy->gameObject.height};
 
+      // when enemy gets hit by player bullet, decrease health
       if (CheckCollisionRecs(bullet_hitbox, enemy_hitbox)) {
-        enemy->gameObject.status = INACTIVE;
+        enemy->gameObject.health -= 10;
       }
     }
   }
@@ -124,26 +125,38 @@ int checkCollidingPlayerBullet(GameObject *player, Enemy *enemy) {
 
 int DrawEnemy(Enemy *enemy) {
 
+  const Vector2 enemy_pos = enemy->gameObject.position;
+  const int x_pos = enemy_pos.x;
+  const int y_pos = enemy_pos.y;
+  const int health_bar_height = 5;
+  const int enemy_health = enemy->gameObject.health;
+  const float health_bar_width = 50;
+  const float health_to_bar_width = (enemy_health / 100.f) * health_bar_width;
+
   if (IN_DEBUG_MODE) {
     // draw debug hitbox
-    DrawRectangle(enemy->gameObject.position.x, enemy->gameObject.position.y,
-                  enemy->gameObject.width, enemy->gameObject.height, RED);
+    DrawRectangle(x_pos, y_pos, enemy->gameObject.width,
+                  enemy->gameObject.height, RED);
+
+    // draw debug bullets spawned by enemy
+    DrawText(TextFormat(("Bullets: %d"), enemy->gameObject.bullet_count),
+             x_pos + 50, y_pos, 12, WHITE);
+
+    // draw debug enemy coordinates
+    DrawText(TextFormat(("x: %.0f, y:%.0f"), x_pos, y_pos), x_pos + 50,
+             y_pos + 10, 12, WHITE);
   }
 
-  // draw debug bullets spawned by enemy
-  DrawText(TextFormat(("Bullets: %d"), enemy->gameObject.bullet_count),
-           enemy->gameObject.position.x + 50, enemy->gameObject.position.y, 12,
-           WHITE);
+  // draw enemy texture
+  DrawTextureEx(enemy->gameObject.texture, enemy_pos, 0, .2, WHITE);
 
   // draw debug enemy coordinates
-  DrawText(TextFormat(("x: %.0f, y:%.0f"), enemy->gameObject.position.x,
-                      enemy->gameObject.position.y),
-           enemy->gameObject.position.x + 50, enemy->gameObject.position.y + 10,
-           12, WHITE);
+  DrawText(TextFormat(("health: %d"), enemy_health), x_pos + 50, y_pos + 10, 12,
+           WHITE);
 
-  // draw enemy texture
-  DrawTextureEx(enemy->gameObject.texture, enemy->gameObject.position, 0, .2,
-                WHITE);
+  // draw healthbar
+  DrawRectangle(x_pos, y_pos, health_bar_width, health_bar_height, RED);
+  DrawRectangle(x_pos, y_pos, health_to_bar_width, health_bar_height, GREEN);
 
   return 0;
 }
@@ -176,6 +189,11 @@ int UpdateEnemies(GameObject *player, Enemy enemies[]) {
   // iterate enemies
   for (int i = 0; i < ENEMIES_COUNT; i++) {
     Enemy *enemy = &enemies[i];
+
+    // if enemy healty reaches below 0, set status to INACTIVE (dead)
+    if (enemy->gameObject.health <= 0) {
+      enemy->gameObject.status = INACTIVE;
+    }
 
     // handle status INACTIVE (dead)
     if (enemy->gameObject.status == INACTIVE) {
