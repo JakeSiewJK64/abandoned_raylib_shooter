@@ -4,6 +4,39 @@
 #include <math.h>
 #include <raylib.h>
 
+int spawnEnemy(Enemy *enemy) {
+
+  const PlayBoundary boundary = GetPlayBoundary();
+
+  // spawn enemy above
+  const int x_margin = 100;
+  const int start_x_pos = boundary.top_left.x + x_margin;
+  const int end_x_pos = x_margin - boundary.top_left.x + boundary.width;
+  const int start_y_pos = boundary.top_left.y - 100;
+  const int random_x_buffer = GetRandomValue(start_x_pos, end_x_pos);
+  const Vector2 spawn_position = {random_x_buffer, start_y_pos};
+
+  // set enemy status to active
+  enemy->gameObject.status = ACTIVE;
+
+  // set enemy new position
+  enemy->gameObject.position = spawn_position;
+
+  return 0;
+}
+
+/**
+ * @brief checks if the enemy is beyond x and y axis of play boundary.
+ * @note top y axis omitted because enemy spawns above.
+ */
+bool checkEnemyWithinBoundary(Enemy *enemy) {
+  const PlayBoundary boundary = GetPlayBoundary();
+
+  return enemy->gameObject.position.x > boundary.top_left.x &&
+         enemy->gameObject.position.x < boundary.bottom_right.x &&
+         enemy->gameObject.position.y < boundary.bottom_right.y;
+}
+
 int updateBullet(Enemy *enemy) {
   // iterate and draw bullets
   for (int enemy_index = 0; enemy_index < enemy->gameObject.bullet_count;
@@ -102,6 +135,12 @@ int DrawEnemy(Enemy *enemy) {
            enemy->gameObject.position.x + 50, enemy->gameObject.position.y, 12,
            WHITE);
 
+  // draw debug enemy coordinates
+  DrawText(TextFormat(("x: %.0f, y:%.0f"), enemy->gameObject.position.x,
+                      enemy->gameObject.position.y),
+           enemy->gameObject.position.x + 50, enemy->gameObject.position.y + 10,
+           12, WHITE);
+
   // draw enemy texture
   DrawTextureEx(enemy->gameObject.texture, enemy->gameObject.position, 0, .2,
                 WHITE);
@@ -138,7 +177,20 @@ int UpdateEnemies(GameObject *player, Enemy enemies[]) {
   for (int i = 0; i < ENEMIES_COUNT; i++) {
     Enemy *enemy = &enemies[i];
 
-    if (enemy->gameObject.status == ACTIVE) {
+    // handle status INACTIVE (dead)
+    if (enemy->gameObject.status == INACTIVE) {
+      spawnEnemy(enemy);
+    } else if (enemy->gameObject.status == ACTIVE) {
+
+      // if enemy is beyond boundaries set to inactive
+      const bool within_boundary = checkEnemyWithinBoundary(enemy);
+
+      if (!within_boundary) {
+        enemy->gameObject.status = INACTIVE;
+
+        // exit loop since there is no need to process further logic
+        break;
+      }
 
       // update position of enemy
       updateEnemyPosition(enemy);
