@@ -206,6 +206,8 @@ int UpdateEnemies(GameObject *player, Enemy enemies[]) {
     if (enemy_active) {
       // if enemy is beyond boundaries set to inactive (dead)
       const bool within_boundary = checkEnemyWithinBoundary(enemy);
+      const double last_shot_fired = enemy->gameObject.last_shot_fired;
+      const double fire_rate = enemy->gameObject.fire_rate;
 
       // if enemy health reaches below 0 or out of bounds, set status to
       // INACTIVE (dead)
@@ -220,8 +222,7 @@ int UpdateEnemies(GameObject *player, Enemy enemies[]) {
       updateEnemyPosition(enemy);
 
       // fire a bullet at the player
-      if (current_time - enemy->gameObject.last_shot_fired >
-          enemy->gameObject.fire_rate) {
+      if (current_time - last_shot_fired > fire_rate) {
         enemyFireBullet(enemy, player, current_time);
       }
 
