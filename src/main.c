@@ -74,12 +74,9 @@ int main() {
     int x_pos = boundary.top_left.x + 200 + (i * buffer);
     int y_pos = 200 + (i * buffer);
     enemies[i].gameObject.texture = turret_texture;
-
-    Vector2 turret_vector = {x_pos, y_pos};
-    enemies[i].gameObject.position = turret_vector;
     enemies[i].gameObject.width = 38;
     enemies[i].gameObject.height = 38;
-    enemies[i].gameObject.status = ACTIVE;
+    enemies[i].gameObject.status = INACTIVE;
     enemies[i].gameObject.bullet_count = 0;
     enemies[i].gameObject.last_shot_fired = -1;
     enemies[i].gameObject.fire_rate = .7f;
