@@ -88,6 +88,10 @@ int DetectPlayerFireInput(GameObject *player) {
     Bullet b1 = {left_cannon, 0};
     Bullet b2 = {right_cannon, 0};
 
+    // set bullet to active on fire
+    b1.status = ACTIVE;
+    b2.status = ACTIVE;
+
     Fire(player->bullets, &player->bullet_count, b1);
     Fire(player->bullets, &player->bullet_count, b2);
 

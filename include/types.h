@@ -37,7 +37,7 @@ typedef enum BULLET_SPEED {
 typedef struct Bullet {
   Vector2 position;
   float angle;
-  float velocity;
+  GAME_OBJECT_STATUS status;
 } Bullet;
 
 typedef struct GameObject {
@@ -50,6 +50,7 @@ typedef struct GameObject {
   int width;
   int height;
   int bullet_count;
+  int health;
   GAME_OBJECT_STATUS status;
 } GameObject;
 

@@ -18,6 +18,7 @@ int spawnEnemy(Enemy *enemy) {
 
   // set enemy status to active
   enemy->gameObject.status = ACTIVE;
+  enemy->gameObject.health = 100;
 
   // set enemy new position
   enemy->gameObject.position = spawn_position;
@@ -100,22 +101,26 @@ int checkCollidingPlayerBullet(GameObject *player, Enemy *enemy) {
     for (int player_bullet_index = 0;
          player_bullet_index < player->bullet_count; player_bullet_index++) {
 
+      Bullet *player_bullet = &player->bullets[player_bullet_index];
+
+      const bool bullet_active = player_bullet->status == ACTIVE;
+
       // get bullet position
-      Vector2 player_bullet_position =
-          player->bullets[player_bullet_index].position;
+      const Vector2 player_bullet_position = player_bullet->position;
 
       // get bullet hitbox
-      Rectangle bullet_hitbox = {player_bullet_position.x,
-                                 player_bullet_position.y, 10, 10};
+      const Rectangle bullet_hitbox = {player_bullet_position.x,
+                                       player_bullet_position.y, 10, 10};
 
       // get bullet hitbox
-      Rectangle enemy_hitbox = {
+      const Rectangle enemy_hitbox = {
           enemy->gameObject.position.x, enemy->gameObject.position.y,
           enemy->gameObject.width, enemy->gameObject.height};
 
       // when enemy gets hit by player bullet, decrease health
-      if (CheckCollisionRecs(bullet_hitbox, enemy_hitbox)) {
+      if (CheckCollisionRecs(bullet_hitbox, enemy_hitbox) && bullet_active) {
         enemy->gameObject.health -= 10;
+        player_bullet->status = INACTIVE;
       }
     }
   }
@@ -190,22 +195,21 @@ int UpdateEnemies(GameObject *player, Enemy enemies[]) {
   for (int i = 0; i < ENEMIES_COUNT; i++) {
     Enemy *enemy = &enemies[i];
 
-    // if enemy healty reaches below 0, set status to INACTIVE (dead)
-    if (enemy->gameObject.health <= 0) {
-      enemy->gameObject.status = INACTIVE;
-    }
+    const bool enemy_active = enemy->gameObject.status == ACTIVE;
 
     // handle status INACTIVE (dead)
-    if (enemy->gameObject.status == INACTIVE) {
+    if (!enemy_active) {
       // respawn enemy
       spawnEnemy(enemy);
     }
 
-    if (enemy->gameObject.status == ACTIVE) {
+    if (enemy_active) {
       // if enemy is beyond boundaries set to inactive (dead)
       const bool within_boundary = checkEnemyWithinBoundary(enemy);
 
-      if (!within_boundary) {
+      // if enemy health reaches below 0 or out of bounds, set status to
+      // INACTIVE (dead)
+      if (!within_boundary || enemy->gameObject.health <= 0) {
         enemy->gameObject.status = INACTIVE;
 
         // exit loop since there is no need to process further logic
