@@ -62,7 +62,7 @@ PlayBoundary GetPlayBoundary() {
   const float screen_width = GetScreenWidth();
   const float screen_height = GetScreenHeight();
   const float play_area_width = SCREEN_WIDTH;
-  const float play_area_height = screen_height;
+  const float play_area_height = SCREEN_HEIGHT;
   const float rectX = screen_width / 2 - play_area_width / 2;
   const float rectY = screen_height / 2 - play_area_height / 2;
   const Vector2 top_left = {rectX, rectY};
