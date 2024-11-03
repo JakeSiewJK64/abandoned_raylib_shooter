@@ -20,7 +20,7 @@
 #define MAX_BULLETS 1000
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 800
-#define ENEMIES_COUNT 5
+#define ENEMIES_COUNT 10
 
 typedef enum GAME_OBJECT_STATUS {
   ACTIVE = 0,

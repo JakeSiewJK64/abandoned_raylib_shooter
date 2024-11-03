@@ -179,17 +179,19 @@ int UpdateEnemies(GameObject *player, Enemy enemies[]) {
 
     // handle status INACTIVE (dead)
     if (enemy->gameObject.status == INACTIVE) {
+      // respawn enemy
       spawnEnemy(enemy);
-    } else if (enemy->gameObject.status == ACTIVE) {
+    }
 
-      // if enemy is beyond boundaries set to inactive
+    if (enemy->gameObject.status == ACTIVE) {
+      // if enemy is beyond boundaries set to inactive (dead)
       const bool within_boundary = checkEnemyWithinBoundary(enemy);
 
       if (!within_boundary) {
         enemy->gameObject.status = INACTIVE;
 
         // exit loop since there is no need to process further logic
-        break;
+        continue;
       }
 
       // update position of enemy
