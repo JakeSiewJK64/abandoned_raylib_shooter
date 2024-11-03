@@ -71,8 +71,6 @@ int main() {
 
   for (int i = 0; i < ENEMIES_COUNT; i++) {
     int buffer = 30;
-    int x_pos = boundary.top_left.x + 200 + (i * buffer);
-    int y_pos = 200 + (i * buffer);
     enemies[i].gameObject.texture = turret_texture;
     enemies[i].gameObject.width = 38;
     enemies[i].gameObject.height = 38;
