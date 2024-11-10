@@ -119,7 +119,7 @@ int checkCollidingPlayerBullet(GameObject *player, Enemy *enemy) {
 
       // when enemy gets hit by player bullet, decrease health
       if (CheckCollisionRecs(bullet_hitbox, enemy_hitbox) && bullet_active) {
-        enemy->gameObject.health -= 10;
+        enemy->gameObject.health -= 50;
         player_bullet->status = INACTIVE;
       }
     }
