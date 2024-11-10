@@ -56,6 +56,7 @@ int main() {
   PlayBoundary boundary = GetPlayBoundary();
   Vector2 vector = {boundary.width / 2.f, boundary.height - 100};
   GameObject player;
+  player.sounds[PLAYER_SHOOT_SOUND_INDEX] = LoadSound("assets/sounds/shot.wav");
   player.texture = plane;
   player.position = vector;
   player.distance_travelled = 0;
@@ -73,6 +74,8 @@ int main() {
 
   for (int i = 0; i < ENEMIES_COUNT; i++) {
     int buffer = 30;
+    enemies[i].gameObject.sounds[ENEMY_EXPLOSION_INDEX] =
+        LoadSound("assets/sounds/explosionShort.wav");
     enemies[i].gameObject.texture = turret_texture;
     enemies[i].gameObject.width = 38;
     enemies[i].gameObject.height = 38;

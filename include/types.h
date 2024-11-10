@@ -21,6 +21,8 @@
 #define SCREEN_WIDTH 600
 #define SCREEN_HEIGHT 800
 #define ENEMIES_COUNT 10
+#define PLAYER_SHOOT_SOUND_INDEX 0
+#define ENEMY_EXPLOSION_INDEX 0
 
 typedef enum GAME_OBJECT_STATUS {
   ACTIVE = 0,
@@ -52,6 +54,7 @@ typedef struct GameObject {
   int height;
   int bullet_count;
   int health;
+  Sound sounds[5];
   GAME_OBJECT_STATUS status;
 } GameObject;
 

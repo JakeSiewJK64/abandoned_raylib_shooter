@@ -216,6 +216,10 @@ int UpdateEnemies(GameObject *player, Enemy enemies[]) {
       if (!within_boundary || enemy->gameObject.health <= 0) {
         enemy->gameObject.status = INACTIVE;
 
+        if (within_boundary) {
+          PlaySound(enemy->gameObject.sounds[ENEMY_EXPLOSION_INDEX]);
+        }
+
         // exit loop since there is no need to process further logic
         continue;
       }

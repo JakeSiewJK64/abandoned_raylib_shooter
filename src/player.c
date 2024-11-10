@@ -135,6 +135,8 @@ int DetectPlayerFireInput(GameObject *player) {
     Fire(player->bullets, &player->bullet_count, b1);
     Fire(player->bullets, &player->bullet_count, b2);
 
+    PlaySound(player->sounds[PLAYER_SHOOT_SOUND_INDEX]);
+
     player->last_shot_fired = GetTime();
   }
   return 0;
