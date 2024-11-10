@@ -52,7 +52,11 @@ int DrawStatus(GameObject *player) {
                       player->position.y),
            screen_width, 60, 18, WHITE);
 
-  DrawFPS(screen_width, 20);
+  // draw score
+  DrawText(TextFormat("Score: %d\n", player->score), screen_width, 110, 18,
+           WHITE);
+
+  DrawFPS(10, 20);
 
   return 0;
 }

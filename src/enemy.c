@@ -121,6 +121,7 @@ int checkCollidingPlayerBullet(GameObject *player, Enemy *enemy) {
       if (CheckCollisionRecs(bullet_hitbox, enemy_hitbox) && bullet_active) {
         enemy->gameObject.health -= 50;
         player_bullet->status = INACTIVE;
+        player->score += enemy->points;
       }
     }
   }

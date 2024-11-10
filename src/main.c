@@ -63,6 +63,7 @@ int main() {
   player.fire_rate = .2f;
   player.height = 110;
   player.width = 95;
+  player.score = 0;
   player.bullet_count = 0;
 
   // initialize enemies
@@ -79,6 +80,7 @@ int main() {
     enemies[i].gameObject.last_shot_fired = -1;
     enemies[i].gameObject.fire_rate = .7f;
     enemies[i].gameObject.health = 100;
+    enemies[i].points = 100;
     enemies[i].type = TURRET;
   }
 

@@ -46,6 +46,7 @@ typedef struct GameObject {
   Bullet bullets[MAX_BULLETS];
   double last_shot_fired;
   double fire_rate;
+  int score;
   int distance_travelled;
   int width;
   int height;
@@ -57,6 +58,7 @@ typedef struct GameObject {
 typedef struct Enemy {
   ENEMY_TYPE type;
   GameObject gameObject;
+  int points;
 } Enemy;
 
 typedef struct PlayBoundary {
