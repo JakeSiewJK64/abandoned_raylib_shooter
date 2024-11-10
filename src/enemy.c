@@ -74,6 +74,7 @@ int enemyFireBullet(Enemy *enemy, GameObject *player, double current_time) {
       (enemy->gameObject.height * .5f); // define start position of bullet
   bullet.position = start_pos;
   bullet.angle = angle;
+  bullet.status = ACTIVE;
 
   // set enemy information after firing a bullet
   enemy->gameObject.bullets[enemy->gameObject.bullet_count] = bullet;

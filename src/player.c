@@ -40,8 +40,27 @@ int UpdatePlayerPosition(GameObject *player) {
   return 0;
 }
 
+int DrawPlayerDied(GameObject *player) {
+  const PlayBoundary boundary = GetPlayBoundary();
+  const float width = 200;
+  const float height = 200;
+  const float x_pos = boundary.top_left.x + (boundary.width / 2) - (width / 2);
+  const float y_pos =
+      boundary.top_left.y + (boundary.height / 2) - (height / 2);
+
+  if (player->status == INACTIVE) {
+    DrawRectangle(x_pos, y_pos, width, height, DARKBLUE);
+    DrawText(TextFormat("You Died"), x_pos + 60, y_pos + 100, 18, RED);
+  }
+
+  return 0;
+}
+
 int DrawStatus(GameObject *player) {
-  int screen_width = GetScreenWidth() - 200;
+  const PlayBoundary boundary = GetPlayBoundary();
+  const float screen_width = GetScreenWidth() - 200;
+  const float health_bar_width = 100;
+  const float health_bar_height = 20;
 
   // draw player distance travelled
   DrawText(TextFormat("Distance Travelled: %d", player->distance_travelled),
@@ -55,6 +74,21 @@ int DrawStatus(GameObject *player) {
   // draw score
   DrawText(TextFormat("Score: %d\n", player->score), screen_width, 110, 18,
            WHITE);
+
+  // draw player health
+  const int margin = 2;
+  const int health_text_x_pos = boundary.top_left.x + 20;
+  const int health_text_y_pos =
+      boundary.height - (boundary.height * .05f) + margin;
+
+  DrawRectangle(boundary.top_left.x + 10,
+                boundary.height - (boundary.height * .05f), health_bar_width,
+                health_bar_height, RED);
+  DrawRectangle(
+      boundary.top_left.x + 10, boundary.height - (boundary.height * .05f),
+      (player->health / 100.f) * health_bar_width, health_bar_height, GREEN);
+  DrawText(TextFormat("%d / 100", player->health), health_text_x_pos,
+           health_text_y_pos, 18, WHITE);
 
   DrawFPS(10, 20);
 
@@ -76,6 +110,8 @@ int DrawPlayer(GameObject *player) {
 
   // draw bullet
   DrawBullets(player->bullets, &player->bullet_count, YELLOW, 2.f);
+
+  DrawPlayerDied(player);
 
   return 0;
 }
@@ -104,13 +140,58 @@ int DetectPlayerFireInput(GameObject *player) {
   return 0;
 }
 
-int UpdatePlayer(GameObject *player) {
+int CheckPlayerEnemyCollision(GameObject *player, Enemy enemies[]) {
+  for (int i = 0; i < ENEMIES_COUNT; i++) {
+    Enemy *enemy = &enemies[i];
+
+    // get player rectangle
+    const Rectangle playerHitbox = {player->position.x, player->position.y,
+                                    player->width, player->height};
+    const Rectangle enemyHitbox = {
+        enemy->gameObject.position.x, enemy->gameObject.position.y,
+        enemy->gameObject.width, enemy->gameObject.height};
+
+    // if player collides with enemy, take 80% damage
+    if (CheckCollisionRecs(enemyHitbox, playerHitbox)) {
+      player->health -= player->health * .8f;
+    }
+
+    // iterate through enemy bullets
+    for (int j = 0; j < enemies[i].gameObject.bullet_count; j++) {
+      Bullet *bullet = &enemy->gameObject.bullets[j];
+      const Rectangle bulletHitbox = {bullet->position.x, bullet->position.y};
+
+      if (CheckCollisionRecs(playerHitbox, bulletHitbox)) {
+        // if bullet is not active skip
+        if (bullet->status != ACTIVE) {
+          continue;
+        }
+
+        player->health -= 5;
+        bullet->status = INACTIVE;
+      }
+    }
+  }
+
+  return 0;
+}
+
+int UpdatePlayer(GameObject *player, Enemy enemies[]) {
+
+  // if player health is < 0, set player to INACTIVE status
+  if (player->health <= 0) {
+    player->status = INACTIVE;
+    return 0;
+  }
 
   // define play boundary
   PlayBoundary boundary = GetPlayBoundary();
 
   // move player
   UpdatePlayerPosition(player);
+
+  // check player damage against enemies
+  CheckPlayerEnemyCollision(player, enemies);
 
   // detect player wall collision
   CheckPlayerWallCollision(player, boundary.top_left, boundary.bottom_right);

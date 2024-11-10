@@ -25,6 +25,10 @@ int DrawPlayer(GameObject *player);
  */
 int Fire(Bullet bullets[], int *bullet_count, Bullet new_bullet);
 
+int DrawPlayerDied(GameObject *player);
+
+int DrawStatus(GameObject *player);
+
 int CheckPlayerWallCollision(GameObject *player, Vector2 top_left,
                              Vector2 bottom_right);
 
@@ -34,6 +38,7 @@ int DetectPlayerFireInput(GameObject *player);
  * @brief All in one function to handle player logic
  *
  * @param player - player game object
+ * @param enemies - enemies
  *
  */
-int UpdatePlayer(GameObject *player);
+int UpdatePlayer(GameObject *player, Enemy enemies[]);

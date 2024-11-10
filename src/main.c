@@ -31,7 +31,7 @@ int Draw(GameObject *player, Enemy enemies[]) {
 int RunGame(GameObject *player, Enemy enemies[]) {
 
   // update player logic each frame
-  UpdatePlayer(player);
+  UpdatePlayer(player, enemies);
 
   UpdateEnemies(player, enemies);
 
@@ -65,6 +65,7 @@ int main() {
   player.width = 95;
   player.score = 0;
   player.bullet_count = 0;
+  player.health = 100;
 
   // initialize enemies
   Enemy enemies[ENEMIES_COUNT];
